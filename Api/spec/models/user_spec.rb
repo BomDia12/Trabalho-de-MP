@@ -23,6 +23,8 @@ RSpec.describe User, type: :model do
     end
 
     context 'user has a repeated email' do
+      before { create(:user, email: user.email) }
+
       it { expect(build(:user, email: user.email)).to be_invalid }
     end
   end
