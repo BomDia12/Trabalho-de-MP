@@ -65,5 +65,12 @@ RSpec.describe Round, type: :model do
       it { expect(build(:round, turn: -4)).to be_invalid }
       it { expect(build(:round, turn: 4)).to be_invalid }
     end
+
+    context "when turn is valid" do
+      it { expect(build(:round, turn: 0)).to be_valid }
+      it { expect(build(:round, turn: 1)).to be_valid }
+      it { expect(build(:round, turn: 2)).to be_valid }
+      it { expect(build(:round, turn: 3)).to be_valid }
+    end
   end
 end
