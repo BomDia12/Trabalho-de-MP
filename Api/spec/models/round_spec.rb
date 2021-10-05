@@ -33,5 +33,12 @@ RSpec.describe Round, type: :model do
       it { expect(build(:round, points_b: 2)).to be_valid }
       it { expect(build(:round, points_b: 0)).to be_valid }
     end
+
+    context "when multiplier is invalid" do
+      it { expect(build(:round, multiplier: 2)).to be_invalid }
+      it { expect(build(:round, multiplier: 0)).to be_invalid }
+      it { expect(build(:round, multiplier: -3)).to be_invalid }
+      it { expect(build(:round, multiplier: 10)).to be_invalid }
+    end
   end
 end
