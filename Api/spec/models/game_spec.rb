@@ -10,5 +10,9 @@ RSpec.describe Game, type: :model do
       it { expect(build(:game, point_a: nil)).to be_invalid }
       it { expect(build(:game, point_b: nil)).to be_invalid }
     end
+
+    context 'when points are invalid' do
+      it { expect(build(:game, point_a: -1)).to be_invalid }
+    end
   end
 end
