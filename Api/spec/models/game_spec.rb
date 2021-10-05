@@ -21,8 +21,11 @@ RSpec.describe Game, type: :model do
     context 'when points are valid' do
       it { expect(build(:game, point_a: 12)).to be_valid }
       it { expect(build(:game, point_a: 0)).to be_valid }
+      it { expect(build(:game, point_a: 6)).to be_valid }
       it { expect(build(:game, point_b: 12)).to be_valid }
       it { expect(build(:game, point_b: 0)).to be_valid }
+      it { expect(build(:game, point_b: 6)).to be_valid }
+
     end
   end
 end
