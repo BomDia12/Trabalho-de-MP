@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :round do
-    game { nil }
+    game { create(:game) }
     winner { "MyString" }
     points_a { 1 }
     points_b { 1 }

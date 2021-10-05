@@ -1,5 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Round, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "factory" do
+    it { expect(build(:round)).to be_valid }
+  end
+
+  describe "validations" do
+    context "when has an empty field" do
+      it { expect(build(:round, game_id: nil)).to be_invalid }
+    end
+  end
 end
