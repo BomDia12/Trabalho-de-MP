@@ -50,8 +50,8 @@ RSpec.describe Round, type: :model do
     end
 
     context "when multiplier_turn is invalid" do
-      it { expect(build(:round, multiplier_turn: 7)).to be_invalid}
-      it { expect(build(:round, multiplier_turn: -1)).to be_invalid}
+      it { expect(build(:round, multiplier_turn: 7)).to be_invalid }
+      it { expect(build(:round, multiplier_turn: -1)).to be_invalid }
     end
   end
 end
