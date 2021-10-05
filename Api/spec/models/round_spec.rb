@@ -20,5 +20,12 @@ RSpec.describe Round, type: :model do
       it { expect(build(:round, points_b: -1)).to be_invalid }
       it { expect(build(:round, points_b: 3)).to be_invalid }
     end
+
+    context "when points are valid" do
+      it { expect(build(:round, points_a: 2)).to be_valid }
+      it { expect(build(:round, points_a: 0)).to be_valid }
+      it { expect(build(:round, points_b: 2)).to be_valid }
+      it { expect(build(:round, points_b: 0)).to be_valid }
+    end
   end
 end
