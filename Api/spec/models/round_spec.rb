@@ -21,6 +21,12 @@ RSpec.describe Round, type: :model do
       it { expect(build(:round, points_b: 3)).to be_invalid }
     end
 
+    context "when points are float" do
+      let(:rodada) { build(:round, points_a: 1.5, points_b: 2.7) }
+      it { expect(rodada.points_a).to eq(1)}
+      it { expect(rodada.points_b).to eq(2)}
+    end
+
     context "when points are valid" do
       it { expect(build(:round, points_a: 2)).to be_valid }
       it { expect(build(:round, points_a: 0)).to be_valid }
