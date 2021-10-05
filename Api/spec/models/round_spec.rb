@@ -8,6 +8,7 @@ RSpec.describe Round, type: :model do
   describe "validations" do
     context "when has an empty field" do
       it { expect(build(:round, game_id: nil)).to be_invalid }
+      it { expect(build(:round, points_a: nil)).to be_invalid }
     end
   end
 end
