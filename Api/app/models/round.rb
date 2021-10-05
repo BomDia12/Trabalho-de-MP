@@ -1,4 +1,4 @@
 class Round < ApplicationRecord
   belongs_to :game
-  validates :points_a, presence: true
+  validates :points_a, :points_b, presence: true
 end
