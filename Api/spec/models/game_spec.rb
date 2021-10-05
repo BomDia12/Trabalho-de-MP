@@ -8,6 +8,7 @@ RSpec.describe Game, type: :model do
   describe 'validations' do
     context 'when has an empty field' do
       it { expect(build(:game, point_a: nil)).to be_invalid }
+      it { expect(build(:game, point_b: nil)).to be_invalid }
     end
   end
 end
