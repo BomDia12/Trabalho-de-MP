@@ -7,4 +7,10 @@ RSpec.describe Hand, type: :model do
     end
   end
 
+  describe 'validations' do
+    context 'when hand has no round' do
+      it { expect(build(:hand, round_id: nil)).to be_invalid }
+    end
+  end
+
 end
