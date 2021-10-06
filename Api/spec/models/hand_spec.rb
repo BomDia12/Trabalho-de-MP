@@ -63,6 +63,14 @@ RSpec.describe Hand, type: :model do
       it { expect(build(:hand, card_b: "♥")).to be_invalid }
       it { expect(build(:hand, card_c: "J")).to be_invalid }
     end
+
+    context 'when sevens and fours have different suit than allowed' do
+      it { expect(build(:hand, card_a: "♠ 7")).to be_invalid }
+      it { expect(build(:hand, card_c: "♣ 7")).to be_invalid }
+      it { expect(build(:hand, card_b: "♥ 4")).to be_invalid }
+      it { expect(build(:hand, card_b: "♠ 4")).to be_invalid }
+      it { expect(build(:hand, card_b: "♦ 4")).to be_invalid }
+    end
   end
 
 end
