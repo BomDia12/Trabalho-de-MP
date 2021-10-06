@@ -1,11 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { build :user }
+  let(:user) { create :user }
 
   describe 'factory' do
     context 'when using standard user factory' do
       it { expect(user).to be_valid }
+
+      it { expect(user.authentication_token).not_to be_nil }
     end
   end
 
@@ -23,8 +25,6 @@ RSpec.describe User, type: :model do
     end
 
     context 'user has a repeated email' do
-      before { create(:user, email: user.email) }
-
       it { expect(build(:user, email: user.email)).to be_invalid }
     end
   end
