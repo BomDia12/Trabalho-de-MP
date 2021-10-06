@@ -51,6 +51,12 @@ RSpec.describe Hand, type: :model do
       it { expect(build(:hand, card_b: "♠ 7 ♠")).to be_invalid }
       it { expect(build(:hand, card_c: "♠ 7 ♠ 4 2")).to be_invalid }
     end
+
+    context 'when card has a number and suit in reverse order' do
+      it { expect(build(:hand, card_a: "A ♠")).to be_invalid }
+      it { expect(build(:hand, card_b: "2 ♥")).to be_invalid }
+      it { expect(build(:hand, card_c: "J ♠")).to be_invalid }
+    end
   end
 
 end
