@@ -24,6 +24,13 @@ RSpec.describe Hand, type: :model do
       it { expect(build(:hand, player: -1)).to be_invalid }
       it { expect(build(:hand, player: 4)).to be_invalid }
     end
+
+    context 'when player is valid' do
+      it { expect(build(:hand, player: 0)).to be_valid }
+      it { expect(build(:hand, player: 1)).to be_valid }
+      it { expect(build(:hand, player: 2)).to be_valid }
+      it { expect(build(:hand, player: 3)).to be_valid }
+    end
   end
 
 end
