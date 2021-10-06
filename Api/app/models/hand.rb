@@ -13,6 +13,12 @@ class MyValidator < ActiveModel::Validator
           if not ['Q', 'J', 'K', 'A', '2', '3', '4', '7'].include? my_cards[count][1]
             record.errors.add "card_#{x}".to_sym, "need a valid number in the second word of string"
           end
+          if my_cards[count][1] == '7' and ['♠', '♣'].include? my_cards[count][0]
+            record.errors.add "card_#{x}".to_sym, "seven can only be ♥ or ♦"
+          end
+          if my_cards[count][1] == '4' and ['♠', '♥', '♦'].include? my_cards[count][0]
+            record.errors.add "card_#{x}".to_sym, "four can only be ♣"
+          end
         else
           record.errors.add "card_#{x}".to_sym, "card can only have a suit and a number"
         end
