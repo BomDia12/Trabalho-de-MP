@@ -1,38 +1,59 @@
 require 'rails_helper'
 
 RSpec.describe "Users", type: :request do
+  let(:user) { create :user }
+
   describe "GET /register" do
     it "returns http success" do
-      get "/user/register"
+      post "/user/register", {
+        email: 'user@email',
+        name: 'username',
+        password: '123456'
+      }
       expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET /login" do
     it "returns http success" do
-      get "/user/login"
+      post "/user/login", {
+        email: user.email,
+        password: '123456'
+      }
       expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET /logout" do
     it "returns http success" do
-      get "/user/logout"
+      delete "/user/logout", headers: {
+        'X-User-Email': user.email,
+        'X-User-Token': user.authentication_token
+      }
       expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET /show" do
     it "returns http success" do
-      get "/user/show"
+      get "/user/show", headers: {
+        'X-User-Email': user.email,
+        'X-User-Token': user.authentication_token
+      }
       expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET /edit" do
     it "returns http success" do
-      get "/user/edit"
+      get "/user/edit", {
+        name: 'oi'
+      }, headers: {
+        'X-User-Email': user.email,
+        'X-User-Token': user.authentication_token
+      }
       expect(response).to have_http_status(:success)
+      expect(user.name).to eql? 'oi'
     end
   end
 
