@@ -13,5 +13,9 @@ RSpec.describe UserGame, type: :model do
 
       it { expect(build(:user_game, player: 4)).to be_invalid }
     end
+
+    context 'should not allow user id to be nil' do
+      it { expect(build(:user_game, user: nil)).to be_invalid }
+    end
   end
 end
