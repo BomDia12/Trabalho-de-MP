@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user_game do
     winner { false }
-    user { nil }
+    user { create(:user) }
   end
 end
