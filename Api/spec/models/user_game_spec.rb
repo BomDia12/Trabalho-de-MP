@@ -12,4 +12,12 @@ RSpec.describe UserGame, type: :model do
       it { expect(build(:user_game, user_id: nil)) }
     end
   end
+
+  describe 'validations' do
+    context "shouldn't allow numbers outside 0..3" do
+      it { expect(build(:user_game, player: -1)).to be_invalid }
+
+      it { expect(build(:user_game, player: 4)).to be_invalid }
+    end
+  end
 end
