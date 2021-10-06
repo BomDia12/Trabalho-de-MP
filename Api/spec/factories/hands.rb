@@ -4,6 +4,6 @@ FactoryBot.define do
     card_b { "MyString" }
     card_c { "MyString" }
     player { 1 }
-    round { nil }
+    round { create(:round) }
   end
 end
