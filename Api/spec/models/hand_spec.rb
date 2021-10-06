@@ -16,6 +16,13 @@ RSpec.describe Hand, type: :model do
       it { expect(build(:hand, card_a: nil)).to be_invalid }
       it { expect(build(:hand, card_b: nil)).to be_invalid }
       it { expect(build(:hand, card_c: nil)).to be_invalid }
+      it { expect(build(:hand, card_a: nil, card_b: nil,card_c: nil)).to be_invalid }
+    end
+
+    context 'when player is invalid' do
+      it { expect(build(:hand, player: nil)).to be_invalid }
+      it { expect(build(:hand, player: -1)).to be_invalid }
+      it { expect(build(:hand, player: 4)).to be_invalid }
     end
   end
 
