@@ -11,6 +11,12 @@ RSpec.describe Hand, type: :model do
     context 'when hand has no round' do
       it { expect(build(:hand, round_id: nil)).to be_invalid }
     end
+
+    context 'when hand doesn´t have a card' do
+      it { expect(build(:hand, card_a: nil)).to be_invalid }
+      it { expect(build(:hand, card_b: nil)).to be_invalid }
+      it { expect(build(:hand, card_c: nil)).to be_invalid }
+    end
   end
 
 end
