@@ -57,6 +57,12 @@ RSpec.describe Hand, type: :model do
       it { expect(build(:hand, card_b: "2 ♥")).to be_invalid }
       it { expect(build(:hand, card_c: "J ♠")).to be_invalid }
     end
+
+    context 'when card has only a number or only a suit' do
+      it { expect(build(:hand, card_a: "♠")).to be_invalid }
+      it { expect(build(:hand, card_b: "♥")).to be_invalid }
+      it { expect(build(:hand, card_c: "J")).to be_invalid }
+    end
   end
 
 end
