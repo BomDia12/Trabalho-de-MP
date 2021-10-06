@@ -5,12 +5,16 @@ class MyValidator < ActiveModel::Validator
     my_card_c = record.card_c.split() if record.card_c != nil
     my_cards, count = [my_card_a, my_card_b, my_card_c], 0
     for x in ['a', 'b', 'c'] do
-      if my_cards[count] != nil
-        if not ['♠', '♥', '♣', '♦'].include? my_cards[count][0]
-          record.errors.add "card_#{x}".to_sym,"need a suit in first word of string"
-        end
-        if not ['Q', 'J', 'K', 'A', '2', '3', '4', '7'].include? my_cards[count][1]
-          record.errors.add "card_#{x}".to_sym, "need a valid number in the second word of string"
+      if my_cards[count] != nil 
+        if not my_cards[count].length != 2
+          if not ['♠', '♥', '♣', '♦'].include? my_cards[count][0]
+            record.errors.add "card_#{x}".to_sym,"need a suit in first word of string"
+          end
+          if not ['Q', 'J', 'K', 'A', '2', '3', '4', '7'].include? my_cards[count][1]
+            record.errors.add "card_#{x}".to_sym, "need a valid number in the second word of string"
+          end
+        else
+          record.errors.add "card_#{x}".to_sym, "card can only have a suit and a number"
         end
       end
       count += 1
