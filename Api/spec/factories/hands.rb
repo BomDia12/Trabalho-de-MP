@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :hand do
-    card_a { "MyString" }
-    card_b { "MyString" }
-    card_c { "MyString" }
+    card_a { "♠ 3" }
+    card_b { "♥ 2" }
+    card_c { "♦ 2" }
     player { 1 }
     round { create(:round) }
   end
