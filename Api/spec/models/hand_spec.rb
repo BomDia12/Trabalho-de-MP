@@ -31,6 +31,12 @@ RSpec.describe Hand, type: :model do
       it { expect(build(:hand, player: 2)).to be_valid }
       it { expect(build(:hand, player: 3)).to be_valid }
     end
+
+    context 'when card has no suit' do
+      it { expect(build(:hand, card_a: "naipe 3")).to be_invalid }
+      it { expect(build(:hand, card_b: "naipe 2")).to be_invalid }
+      it { expect(build(:hand, card_c: "naipe 7")).to be_invalid }
+    end
   end
 
 end
