@@ -3,10 +3,14 @@ class MyValidator < ActiveModel::Validator
     my_card_a = record.card_a.split() if record.card_a != nil 
     my_card_b = record.card_b.split() if record.card_b != nil
     my_card_c = record.card_c.split() if record.card_c != nil
-    if record.card_a != nil 
-      if not ['♠', '♥', '♣', '♦'].include? my_card_a[0]
-        record.errors.add :card_a, "Need a suit in first word of string" 
+    my_cards, count = [my_card_a, my_card_b, my_card_c], 0
+    for x in ['a', 'b', 'c'] do
+      if my_cards[count] != nil
+        if not ['♠', '♥', '♣', '♦'].include? my_cards[count][0]
+          record.errors.add "card_#{x}".to_sym,"need a suit in first word of string"
+        end
       end
+      count += 1
     end
   end
 end
