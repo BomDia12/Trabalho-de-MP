@@ -9,7 +9,7 @@ RSpec.describe UserGame, type: :model do
 
   describe 'Anonymous User' do
     context 'should allow for no user' do
-      it { expect(build(:user_game, user_id: nil)) }
+      it { expect(build(:user_game, user_id: nil)).to be_valid }
     end
   end
 
