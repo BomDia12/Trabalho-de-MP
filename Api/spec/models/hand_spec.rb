@@ -37,6 +37,14 @@ RSpec.describe Hand, type: :model do
       it { expect(build(:hand, card_b: "naipe 2")).to be_invalid }
       it { expect(build(:hand, card_c: "naipe 7")).to be_invalid }
     end
+
+    context 'when card number is invalid' do
+      it { expect(build(:hand, card_a: "♠ 5")).to be_invalid }
+      it { expect(build(:hand, card_a: "♠ 6")).to be_invalid }
+      it { expect(build(:hand, card_a: "♠ 8")).to be_invalid }
+      it { expect(build(:hand, card_a: "♠ 9")).to be_invalid }
+      it { expect(build(:hand, card_a: "♠ 10")).to be_invalid }
+    end
   end
 
 end
