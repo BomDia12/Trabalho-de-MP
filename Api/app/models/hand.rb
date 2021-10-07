@@ -1,4 +1,4 @@
-class MyValidator < ActiveModel::Validator
+class ValidateCard < ActiveModel::Validator
   def validate(record)
     my_card_a = record.card_a.split() if record.card_a != nil 
     my_card_b = record.card_b.split() if record.card_b != nil
@@ -28,10 +28,23 @@ class MyValidator < ActiveModel::Validator
   end
 end
 
+class ValidateHand < ActiveModel::Validator
+  def validate(record)
+    if record.card_a == record.card_b
+      record.errors.add :card_b, "card_b can not be identical to card_a"
+    elsif record.card_b == record.card_c
+      record.errors.add :card_c, "card_c can not be identical to card_b"
+    elsif record.card_a == record.card_c
+      record.errors.add :card_c, "card_c can not be identical to card_a"
+    end
+  end
+end
+
 class Hand < ApplicationRecord
   include ActiveModel::Validations
   belongs_to :round
   validates :card_a, :card_b, :card_c, :player ,presence: true
   validates :player, inclusion:  0..3
-  validates_with MyValidator
+  validates_with ValidateCard
+  validates_with ValidateHand
 end
