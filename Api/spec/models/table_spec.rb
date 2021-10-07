@@ -24,5 +24,13 @@ RSpec.describe Table, type: :model do
       it { expect(build(:table, card_c: "naipe 7")).to be_invalid }
       it { expect(build(:table, card_d: "naipe 7")).to be_invalid }
     end
+
+    context 'when card number is invalid' do
+      it { expect(build(:table, card_a: "♠ 5")).to be_invalid }
+      it { expect(build(:table, card_b: "♠ 6")).to be_invalid }
+      it { expect(build(:table, card_c: "♠ 8")).to be_invalid }
+      it { expect(build(:table, card_d: "♠ 9")).to be_invalid }
+      it { expect(build(:table, card_a: "♠ 10")).to be_invalid }
+    end
   end
 end
