@@ -13,5 +13,9 @@ RSpec.describe Table, type: :model do
       it { expect(build(:table, card_c: nil)).to be_valid }
       it { expect(build(:table, card_d: nil)).to be_valid }
     end
+
+    context 'should be referencing a round' do
+      it { expect(build(:table, round_id: nil)).to be_invalid }
+    end
   end
 end
