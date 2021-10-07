@@ -13,10 +13,10 @@ RSpec.describe Hand, type: :model do
     end
 
     context 'when hand doesn´t have a card' do
-      it { expect(build(:hand, card_a: nil)).to be_invalid }
-      it { expect(build(:hand, card_b: nil)).to be_invalid }
-      it { expect(build(:hand, card_c: nil)).to be_invalid }
-      it { expect(build(:hand, card_a: nil, card_b: nil,card_c: nil)).to be_invalid }
+      it { expect(build(:hand, card_a: nil)).to be_valid }
+      it { expect(build(:hand, card_b: nil)).to be_valid }
+      it { expect(build(:hand, card_c: nil)).to be_valid }
+      it { expect(build(:hand, card_a: nil, card_b: nil,card_c: nil)).to be_valid }
     end
 
     context 'when player is invalid' do
