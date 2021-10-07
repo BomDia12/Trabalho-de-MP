@@ -30,11 +30,11 @@ end
 
 class ValidateHand < ActiveModel::Validator
   def validate(record)
-    if record.card_a == record.card_b
+    if record.card_a == record.card_b and record.card_a != nil
       record.errors.add :card_b, "card_b can not be identical to card_a"
-    elsif record.card_b == record.card_c
+    elsif record.card_b == record.card_c and record.card_b != nil
       record.errors.add :card_c, "card_c can not be identical to card_b"
-    elsif record.card_a == record.card_c
+    elsif record.card_a == record.card_c and record.card_a != nil
       record.errors.add :card_c, "card_c can not be identical to card_a"
     end
   end
