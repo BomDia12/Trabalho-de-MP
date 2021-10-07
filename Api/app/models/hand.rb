@@ -43,7 +43,7 @@ end
 class Hand < ApplicationRecord
   include ActiveModel::Validations
   belongs_to :round
-  validates :card_a, :card_b, :card_c, :player ,presence: true
+  validates :player ,presence: true
   validates :player, inclusion:  0..3
   validates_with ValidateCard
   validates_with ValidateHand
