@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :table do
-    card_a { "" }
-    card_b { "" }
-    card_c { "" }
-    card_d { "" }
-    round { nil }
+    card_a { "♠ A" }
+    card_b { "♥ 7" }
+    card_c { "♦ 7" }
+    card_d { "♣ 4" }
+    round { create(:round) }
   end
 end
