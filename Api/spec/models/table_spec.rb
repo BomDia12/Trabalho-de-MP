@@ -32,5 +32,14 @@ RSpec.describe Table, type: :model do
       it { expect(build(:table, card_d: "♠ 9")).to be_invalid }
       it { expect(build(:table, card_a: "♠ 10")).to be_invalid }
     end
+
+    context 'when card has more than a number and a suit' do
+      it { expect(build(:table, card_a: "♠ 7 7")).to be_invalid }
+      it { expect(build(:table, card_b: "♠ 7 ♠")).to be_invalid }
+      it { expect(build(:table, card_c: "♠ 7 ♠ 4 2")).to be_invalid }
+      it { expect(build(:table, card_d: "♠ 7 ♠ 4 2")).to be_invalid }
+
+    end
+
   end
 end
