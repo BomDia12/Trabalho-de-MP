@@ -71,6 +71,12 @@ RSpec.describe Hand, type: :model do
       it { expect(build(:hand, card_b: "♠ 4")).to be_invalid }
       it { expect(build(:hand, card_b: "♦ 4")).to be_invalid }
     end
+
+    context 'when player has two or more identicals cards on his hand' do
+      it { expect(build(:hand, card_a: "♠ 3", card_b: "♠ 3")).to be_invalid }
+      it { expect(build(:hand, card_a: "♠ 2", card_c: "♠ 2")).to be_invalid }
+      it { expect(build(:hand, card_b: "♣ 4" ,card_c: "♣ 4")).to be_invalid }
+    end
   end
 
 end
