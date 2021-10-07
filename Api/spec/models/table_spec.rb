@@ -47,5 +47,12 @@ RSpec.describe Table, type: :model do
       it { expect(build(:table, card_d: "K ♠")).to be_invalid }
     end
 
+    context 'when card has only a number or only a suit' do
+      it { expect(build(:table, card_a: "♠")).to be_invalid }
+      it { expect(build(:table, card_b: "♥")).to be_invalid }
+      it { expect(build(:table, card_c: "J")).to be_invalid }
+      it { expect(build(:table, card_d: "3")).to be_invalid }
+    end
+
   end
 end
