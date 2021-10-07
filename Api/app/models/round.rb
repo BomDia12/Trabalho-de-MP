@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Round < ApplicationRecord
   belongs_to :game
   validates :points_a, :points_b, :multiplier, :turn, presence: true

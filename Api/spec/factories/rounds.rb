@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :round do
     game { create(:game) }
-    winner { "MyString" }
+    winner { 'MyString' }
     points_a { 1 }
     points_b { 1 }
     multiplier { 1 }

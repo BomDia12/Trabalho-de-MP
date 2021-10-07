@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Game, type: :model do
@@ -25,7 +27,6 @@ RSpec.describe Game, type: :model do
       it { expect(build(:game, point_b: 12)).to be_valid }
       it { expect(build(:game, point_b: 0)).to be_valid }
       it { expect(build(:game, point_b: 6)).to be_valid }
-
     end
   end
 end
