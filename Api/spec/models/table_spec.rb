@@ -54,5 +54,13 @@ RSpec.describe Table, type: :model do
       it { expect(build(:table, card_d: "3")).to be_invalid }
     end
 
+    context 'when sevens and fours have different suit than allowed' do
+      it { expect(build(:table, card_a: "♠ 7")).to be_invalid }
+      it { expect(build(:table, card_c: "♣ 7")).to be_invalid }
+      it { expect(build(:table, card_b: "♥ 4")).to be_invalid }
+      it { expect(build(:table, card_d: "♠ 4")).to be_invalid }
+      it { expect(build(:table, card_b: "♦ 4")).to be_invalid }
+    end
+
   end
 end
