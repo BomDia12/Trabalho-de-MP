@@ -1,9 +1,10 @@
-import { Container } from "./styles"
+import { Container, Table } from "./styles"
 
 const Rules = () => {
   return (
     <Container>
       <h2>Truco mineiro</h2>
+      <br/>
       <div>
         <p>As manilhas (cartas mais fortes) são fixas e têm a seguinte ordem (do mais forte para o mais fraco):</p>
         <ul>
@@ -35,6 +36,8 @@ const Rules = () => {
           <li>3 de espadas; (carta comum mais forte)</li>
         </ul>
 
+        <br/>
+        
         <p>Exemplo de mão fraca:</p>
         <ul>
           <li>Rainha (carta mais fraca);</li>
@@ -77,8 +80,7 @@ const Rules = () => {
       </div>
 
       <div>
-        Pontos no jogo
-        <table>
+        <Table>
           <tr>
             <th> Aposta </th>
             <th> Pontos </th>
@@ -108,7 +110,7 @@ const Rules = () => {
             <td>Truco 12</td>
             <td>12 pontos</td>
           </tr>
-        </table>
+        </Table>
       </div>
 
       <div>
