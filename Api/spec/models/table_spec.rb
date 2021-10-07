@@ -69,9 +69,6 @@ RSpec.describe Table, type: :model do
       it { expect(build(:table, card_b: "♣ 4" ,card_d: "♣ 4")).to be_invalid }
       it { expect(build(:table, card_a: "♠ A", card_d: "♠ A")).to be_invalid }
       it { expect(build(:table, card_c: "♥ 7", card_d: "♥ 7")).to be_invalid }
-
-
-
     end
 
   end

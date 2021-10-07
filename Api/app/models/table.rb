@@ -30,8 +30,27 @@ class ValidateCard < ActiveModel::Validator
   end
 end
 
+class ValidateTable < ActiveModel::Validator
+  def validate(record)
+    if record.card_a == record.card_b and record.card_a != nil
+      record.errors.add :card_b, "card_b can not be identical to card_a"
+    elsif record.card_b == record.card_c and record.card_b != nil
+      record.errors.add :card_c, "card_c can not be identical to card_b"
+    elsif record.card_a == record.card_c and record.card_a != nil
+      record.errors.add :card_c, "card_c can not be identical to card_a"
+    elsif record.card_a == record.card_d and record.card_a != nil
+      record.errors.add :card_d, "card_d can not be identical to card_a"
+    elsif record.card_b == record.card_d and record.card_b != nil
+      record.errors.add :card_d, "card_d can not be identical to card_b"
+    elsif record.card_c == record.card_d and record.card_c != nil
+      record.errors.add :card_d, "card_d can not be identical to card_c"
+    end
+  end
+end
+
 class Table < ApplicationRecord
   include ActiveModel::Validations
   belongs_to :round
   validates_with ValidateCard
+  validates_with ValidateTable
 end
