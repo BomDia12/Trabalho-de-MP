@@ -67,13 +67,31 @@ RSpec.describe 'Users', type: :request do
     end
   end
 
-  describe 'GET /login' do
+  describe 'POST /login' do
     it 'returns http success' do
-      post '/user/login', {
+      post '/user/login', params: {
         email: user.email,
         password: '123456'
       }
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status :success
+    end
+
+    context 'invalid information' do
+      it 'invalid email' do
+        post '/user/login', params: {
+          email: 'oi@oi',
+          password: '123456'
+        }
+        expect(response).to have_http_status :not_found
+      end
+
+      it 'invalid password' do
+        post '/user/login', params: {
+          email: user.email,
+          password: '1234567'
+        }
+        expect(response).to have_http_status :unauthorized
+      end
     end
   end
 
