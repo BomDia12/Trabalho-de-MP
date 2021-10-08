@@ -10,4 +10,6 @@ class User < ApplicationRecord
   validates_presence_of :name, :email
   validates_uniqueness_of :email
   validates_length_of :name, minimum: 3
+
+  has_many :user_games
 end
