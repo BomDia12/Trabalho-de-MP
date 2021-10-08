@@ -101,7 +101,7 @@ RSpec.describe 'Users', type: :request do
         'X-User-Email': user.email,
         'X-User-Token': user.authentication_token
       }
-      expect(response).to have_http_status :success
+      expect(response).to have_http_status :ok
     end
 
     context 'not authorized' do

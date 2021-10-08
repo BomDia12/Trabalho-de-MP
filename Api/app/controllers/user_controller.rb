@@ -1,4 +1,6 @@
 class UserController < ApplicationController
+  acts_as_token_authentication_handler_for User, only: :logout
+
   def register
     user = User.new(user_params)
     user.save!
@@ -18,7 +20,10 @@ class UserController < ApplicationController
     render json: { message: e.message }, status: :not_found
   end
 
-  def logout; end
+  def logout
+    current_user.update(authentication_token: nil)
+    head :ok
+  end
 
   def show; end
 
