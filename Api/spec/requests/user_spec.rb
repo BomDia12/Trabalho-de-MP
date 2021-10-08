@@ -160,7 +160,7 @@ RSpec.describe 'Users', type: :request do
         'X-User-Token': user.authentication_token
       }
       expect(response).to have_http_status :success
-      expect(user.name).to eql 'new name'
+      expect(User.find(user.id).name).to eql 'new name'
     end
 
     context 'authentication failure' do
@@ -193,7 +193,7 @@ RSpec.describe 'Users', type: :request do
       end
 
       it 'repeated email' do
-        put '/user/edit', {
+        put '/user/edit', params: {
           email: create(:user, email: 'oi@oi').email
         }, headers: {
           'X-User-Email': user.email,

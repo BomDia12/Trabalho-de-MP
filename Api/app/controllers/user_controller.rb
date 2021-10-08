@@ -1,5 +1,6 @@
 class UserController < ApplicationController
-  acts_as_token_authentication_handler_for User, only: %i[show logout]
+  acts_as_token_authentication_handler_for User,
+                                           only: %i[show logout edit]
 
   def register
     user = User.new(user_params)
@@ -29,7 +30,12 @@ class UserController < ApplicationController
     render json: current_user
   end
 
-  def edit; end
+  def edit
+    current_user.update!(user_params)
+    render json: current_user
+  rescue StandardError => e
+    render json: { message: e.message }, status: :bad_request
+  end
 
   private
 
