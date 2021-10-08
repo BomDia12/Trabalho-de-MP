@@ -129,7 +129,25 @@ RSpec.describe 'Users', type: :request do
         'X-User-Email': user.email,
         'X-User-Token': user.authentication_token
       }
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status :success
+    end
+
+    context 'unauthorized' do
+      it 'wrong email' do
+        get '/user/show', headers: {
+          'X-User-Email': 'oi',
+          'X-User-Token': user.authentication_token
+        }
+        expect(response).to redirect_to authentication_failure_path
+      end
+
+      it 'wrong token' do
+        get '/user/show', headers: {
+          'X-User-Email': user.email,
+          'X-User-Token': 'oi'
+        }
+        expect(response).to redirect_to authentication_failure_path
+      end
     end
   end
 
