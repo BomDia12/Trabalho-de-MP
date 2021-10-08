@@ -1,5 +1,5 @@
 class UserController < ApplicationController
-  acts_as_token_authentication_handler_for User, only: :logout
+  acts_as_token_authentication_handler_for User, only: %i[show logout]
 
   def register
     user = User.new(user_params)
@@ -25,7 +25,9 @@ class UserController < ApplicationController
     head :ok
   end
 
-  def show; end
+  def show
+    render json: current_user
+  end
 
   def edit; end
 
