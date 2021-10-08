@@ -3,19 +3,19 @@ require 'rails_helper'
 RSpec.describe 'Users', type: :request do
   let(:user) { create :user }
 
-  describe 'GET /register' do
+  describe 'POST /register' do
     it 'returns http success' do
-      post '/user/register', {
+      post '/user/register', params: {
         email: 'user@email',
         name: 'username',
         password: '123456'
       }
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status :success
     end
 
     context 'invalid information' do
       it 'repeated email' do
-        post '/user/register', {
+        post '/user/register', params: {
           email: user.email,
           name: 'username',
           password: '123456'
@@ -24,7 +24,7 @@ RSpec.describe 'Users', type: :request do
       end
 
       it 'name too short' do
-        post '/user/register', {
+        post '/user/register', params: {
           email: 'uaer@email',
           username: 'oi',
           password: '123456'
@@ -33,7 +33,7 @@ RSpec.describe 'Users', type: :request do
       end
 
       it 'password too short' do
-        post '/user/register', {
+        post '/user/register', params: {
           email: 'user@email',
           name: 'username',
           password: '123'
@@ -42,7 +42,7 @@ RSpec.describe 'Users', type: :request do
       end
 
       it 'no email' do
-        post '/user/register', {
+        post '/user/register', params: {
           name: 'username',
           password: '123456'
         }
@@ -50,7 +50,7 @@ RSpec.describe 'Users', type: :request do
       end
 
       it 'no name' do
-        post '/user/register', {
+        post '/user/register', params: {
           email: 'user@email',
           password: '123456'
         }
@@ -58,7 +58,7 @@ RSpec.describe 'Users', type: :request do
       end
 
       it 'no password' do
-        post '/user/register', {
+        post '/user/register', params: {
           email: 'user@email',
           name: 'username'
         }
