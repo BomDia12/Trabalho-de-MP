@@ -7,7 +7,16 @@ class UserController < ApplicationController
     render json: { message: e.message }, status: :bad_request
   end
 
-  def login; end
+  def login
+    user = User.find_by(email: params[:email])
+    if user.valid_password? params[:password]
+      render json: user
+    else
+      head :unauthorized
+    end
+  rescue StandardError => e
+    render json: { message: e.message }, status: :not_found
+  end
 
   def logout; end
 
