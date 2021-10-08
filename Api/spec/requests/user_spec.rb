@@ -151,16 +151,56 @@ RSpec.describe 'Users', type: :request do
     end
   end
 
-  describe 'GET /edit' do
+  describe 'PUT /edit' do
     it 'returns http success' do
-      get '/user/edit', {
-        name: 'oi'
+      put '/user/edit', params: {
+        name: 'new name'
       }, headers: {
         'X-User-Email': user.email,
         'X-User-Token': user.authentication_token
       }
-      expect(response).to have_http_status(:success)
-      expect(user.name).to eql? 'oi'
+      expect(response).to have_http_status :success
+      expect(user.name).to eql 'new name'
+    end
+
+    context 'authentication failure' do
+      it 'wrong email' do
+        put '/user/edit', headers: {
+          'X-User-Email': 'oi',
+          'X-User-Token': user.authentication_token
+        }
+        expect(response).to redirect_to authentication_failure_path
+      end
+
+      it 'wrong token' do
+        put '/user/edit', headers: {
+          'X-User-Email': user.email,
+          'X-User-Token': 'oi'
+        }
+        expect(response).to redirect_to authentication_failure_path
+      end
+    end
+
+    context 'invalid params' do
+      it 'short name' do
+        put '/user/edit', params: {
+          name: 'oi'
+        }, headers: {
+          'X-User-Email': user.email,
+          'X-User-Token': user.authentication_token
+        }
+        expect(response).to have_http_status :bad_request
+      end
+
+      it 'repeated email' do
+        put '/user/edit', {
+          email: create(:user, email: 'oi@oi').email
+        }, headers: {
+          'X-User-Email': user.email,
+          'X-User-Token': user.authentication_token
+        }
+        expect(response).to have_http_status :bad_request
+      end
     end
   end
 end
