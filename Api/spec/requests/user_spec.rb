@@ -95,13 +95,31 @@ RSpec.describe 'Users', type: :request do
     end
   end
 
-  describe 'GET /logout' do
+  describe 'DELETE /logout' do
     it 'returns http success' do
       delete '/user/logout', headers: {
         'X-User-Email': user.email,
         'X-User-Token': user.authentication_token
       }
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status :success
+    end
+
+    context 'not authorized' do
+      it 'wrong token' do
+        delete '/user/logout', headers: {
+          'X-User-Email': user.email,
+          'X-User-Token': 'oi'
+        }
+        expect(response).to redirect_to authentication_failure_path
+      end
+
+      it 'wrong email' do
+        delete '/user/logout', headers: {
+          'X-User-Email': 'oi@oi',
+          'X-User-Token': user.authentication_token
+        }
+        expect(response).to redirect_to authentication_failure_path
+      end
     end
   end
 
