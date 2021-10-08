@@ -12,6 +12,59 @@ RSpec.describe "Users", type: :request do
       }
       expect(response).to have_http_status(:success)
     end
+
+    context 'invalid information' do
+      it 'repeated email' do
+        post '/user/register', {
+          email: user.email,
+          name: 'username',
+          password: '123456'
+        }
+        expect(response).to have_http_status :bad_request
+      end
+
+      it 'name too short' do
+        post '/user/register', {
+          email: 'uaer@email',
+          username: 'oi',
+          password: '123456'
+        }
+        expect(response).to have_http_status :bad_request
+      end
+
+      it 'password too short' do
+        post '/user/register', {
+          email: 'user@email',
+          name: 'username',
+          password: '123'
+        }
+        expect(response).to have_http_status :bad_request
+      end
+
+      it 'no email' do
+        post "/user/register", {
+          name: 'username',
+          password: '123456'
+        }
+        expect(response).to have_http_status :bad_request
+      end
+
+      it 'no name' do
+        post "/user/register", {
+          email: 'user@email',
+          password: '123456'
+        }
+        expect(response).to have_http_status :bad_request
+      end
+
+      it 'no password' do
+        post "/user/register", {
+          email: 'user@email',
+          name: 'username',
+        }
+        expect(response).to have_http_status :bad_request
+      end
+    end
   end
 
   describe "GET /login" do
