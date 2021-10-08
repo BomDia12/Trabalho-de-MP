@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
+  devise_for :users, skip: :all
+
   post 'user/register'
   post 'user/login'
   delete 'user/logout'
   get 'user/show'
   put 'user/edit'
-  devise_for :users, skip: :all
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  get 'authentication_failure',
+      to: 'application#authentication_failure',
+      as: :authentication_failure
 end
