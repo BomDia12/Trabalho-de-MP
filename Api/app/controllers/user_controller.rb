@@ -1,16 +1,11 @@
 class UserController < ApplicationController
-  def register
-  end
+  def register; end
 
-  def login
-  end
+  def login; end
 
-  def logout
-  end
+  def logout; end
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 end
