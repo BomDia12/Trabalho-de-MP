@@ -8,5 +8,6 @@ FactoryBot.define do
     multiplier { 1 }
     multiplier_turn { 1 }
     turn { 1 }
+    ended { false }
   end
 end
