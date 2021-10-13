@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
   devise_for :users, skip: :all
 
-  post 'user/register'
-  post 'user/login'
-  delete 'user/logout'
-  get 'user/show'
-  put 'user/edit'
+  scope 'user' do
+    post 'register', to: 'user#register'
+    post 'login', to: 'user#login'
+    delete 'logout', to: 'user#logout'
+    get 'show', to: 'user#show'
+    put 'edit', to: 'user#edit'
+  end
 
   get 'authentication_failure',
       to: 'application#authentication_failure',
