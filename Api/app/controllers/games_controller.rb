@@ -11,4 +11,13 @@ class GamesController < ApplicationController
         end
         return my_deck
     end
+
+    def distribute_cards
+        deck, hands = construct_deck.sample, Array.new
+        for i in 0..4
+            for j in 0..4
+                hands[i].push(deck.pop)
+        end
+        return hands
+    end
 end
