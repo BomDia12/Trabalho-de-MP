@@ -1,7 +1,12 @@
 class GamesController < ApplicationController
 
+    def index
+        batata = distribute_cards
+        render json: batata
+    end
+
     private
-    def contruct_deck
+    def construct_deck
         suits, normal_cards = ['♠', '♥', '♣', '♦'], ['Q', 'J', 'K', 'A', '2', '3']
         my_deck = ['♣ 4', '♦ 7', '♥ 7']
         suits.each do |suit|
@@ -13,10 +18,11 @@ class GamesController < ApplicationController
     end
 
     def distribute_cards
-        deck, hands = construct_deck.sample, Array.new
-        for i in 0..4
-            for j in 0..4
+        deck, hands = construct_deck.sample(28, random: Random.new(1)), [[],[],[],[]]
+        for i in 0...4
+            for j in 0...4
                 hands[i].push(deck.pop)
+            end
         end
         return hands
     end
