@@ -1,9 +1,5 @@
 class GamesController < ApplicationController
 
-    def index
-        batata = distribute_cards
-        render json: batata
-    end
 
     private
     def construct_deck
@@ -21,7 +17,9 @@ class GamesController < ApplicationController
         deck, hands = construct_deck.sample(28, random: Random.new(1)), [[],[],[],[]]
         for i in 0...4
             for j in 0...4
-                hands[i].push(deck.pop)
+                card = deck.sample
+                hands[i].push(card)
+                deck.delete(card)
             end
         end
         return hands
