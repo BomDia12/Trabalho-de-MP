@@ -9,6 +9,9 @@ RSpec.describe "Games", type: :request do
       it 'return a success response' do
         expect(response).to have_http_status(:created)
       end
+      it 'responds with a json' do
+        expect(response.content_type).to eq('application/json; charset=utf-8')
+      end
     end
   end
 end
