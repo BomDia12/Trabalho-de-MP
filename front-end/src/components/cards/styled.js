@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
     background: #FFFFFF;
-    border: 1px solid #000000;
+    border: 1px solid var(--black);
     box-sizing: border-box;
     border-radius: 10px;
     width: 250px;
@@ -41,7 +41,7 @@ export const Container = styled.div`
                 line-height: 32px;
                 text-align: center;
 
-                color: #1D3557;
+                color: var(--prussian-blue);
             }
 
             .span-number {

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const ContainerPrincipal = styled.div`
-    background-color: #1D3557;
+    background-color: var(--prussian-blue);
     width: 100vw;
     height: 100vh;
 `;
@@ -17,7 +17,7 @@ export const BoxPerfil = styled.div`
     
     width: 50%;
     height: 100%;
-    background-color: #2B4614;
+    background-color: var(--army-geen);
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -46,7 +46,7 @@ export const WrapperContainerUser = styled.div`
         font-style: normal;
         font-weight: bold;
         font-size: 36px;
-        color: #1D3557;
+        color: var(--prussian-blue);
     }
 `;
 
@@ -72,7 +72,7 @@ export const FormContainer = styled.form`
         }
         
         .div-line-botton {
-            border-bottom: 1px solid #1D3557;
+            border-bottom: 1px solid var(--prussian-blue);
             width: 50%;
         }
     }
@@ -83,7 +83,7 @@ export const SecondContainer = styled.div`
     margin: 2rem 0;
 
     .container-my-games {
-        border-bottom: 1px solid #1D3557;
+        border-bottom: 1px solid var(--prussian-blue);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -91,8 +91,8 @@ export const SecondContainer = styled.div`
         .my-games-button {
             width: 214px;
             height: 42px;
-            background: #FBB136;
-            border: 1px solid #1D3557;
+            background: var(--bright-yellow-crayola);
+            border: 1px solid var(--prussian-blue);
             box-sizing: border-box;
             border-radius: 50px;
 
@@ -100,7 +100,7 @@ export const SecondContainer = styled.div`
             justify-content: center;
             align-items: center;
 
-            color: #1D3557;
+            color: var(--prussian-blue);
             font-style: normal;
             font-weight: normal;
             font-size: 24px;
