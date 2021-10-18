@@ -1,5 +1,12 @@
 class GamesController < ApplicationController
 
+    def create_game
+        game = Game.new(point_a: 0, point_b: 0)
+        game.save!
+        render json: game, status: :created
+    rescue StandardError => e
+        render json: { message: e.message }, status: :unprocessable_entity
+    end
 
     private
     def construct_deck
