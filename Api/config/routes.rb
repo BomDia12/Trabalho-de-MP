@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   scope 'games' do
     post 'new', to: 'games#create_game'
-    get 'round_begins', to: 'games#construct_hands'
+    get 'round_begins/:id', to: 'games#construct_hands'
   end
   get 'authentication_failure',
       to: 'application#authentication_failure',
