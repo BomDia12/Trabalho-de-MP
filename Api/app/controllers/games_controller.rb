@@ -4,6 +4,7 @@ class GamesController < ApplicationController
   #    render json: batata.hands
   # end
 
+  # H12 & H13
   def create_game
     game = Game.new(point_a: 0, point_b: 0)
     game.save!
@@ -15,6 +16,7 @@ class GamesController < ApplicationController
 
   private
 
+  # H12 & H13
   def create_round(game_id)
     round = Round.create({
                            game_id: game_id,
@@ -25,10 +27,11 @@ class GamesController < ApplicationController
                            turn: 0,
                            ended: false
                          })
-    create_hands(round.id)
+    create_hands(round.id) # H5
     create_table(round.id)
   end
 
+  # H12 & H13
   def create_hands(round_id)
     hands = distribute_cards
     (0..3).each do |i|
@@ -42,10 +45,12 @@ class GamesController < ApplicationController
     end
   end
 
+  # H12 & H13
   def create_table(round_id)
     Table.create({ round_id: round_id })
   end
 
+  # H5
   def construct_deck
     suits = ['♠', '♥', '♣', '♦']
     normal_cards = %w[Q J K A 2 3]
@@ -58,6 +63,7 @@ class GamesController < ApplicationController
     my_deck
   end
 
+  # H5
   def distribute_cards
     deck = construct_deck.sample(28, random: Random.new(1))
     hands = [[], [], [], []]
