@@ -82,5 +82,9 @@ RSpec.describe Round, type: :model do
       it { expect(build(:round, points_a: 1, points_b: 1, ended: true)).to be_invalid }
       it { expect(build(:round, points_a: 2, points_b: 2, ended: true)).to be_invalid }
     end
+
+    context "when hands are invalid" do
+      it { expect(build(:round, hands: [build(:hand),build(:hand),build(:hand),build(:hand),build(:hand)])).to be_invalid }
+    end
   end
 end
