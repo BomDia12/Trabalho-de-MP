@@ -31,15 +31,16 @@ class GamesController < ApplicationController
 
   def create_round(game_id)
     round = Round.create({
-                   game_id: game_id,
-                   points_a: 0,
-                   points_b: 0,
-                   multiplier: 1,
-                   multiplier_turn: nil,
-                   turn: 0,
-                   ended: false
-                 })
+                           game_id: game_id,
+                           points_a: 0,
+                           points_b: 0,
+                           multiplier: 1,
+                           multiplier_turn: nil,
+                           turn: 0,
+                           ended: false
+                         })
     create_hands(round.id)
+    create_table(round.id)
   end
 
   def create_hands(round_id)
@@ -55,8 +56,8 @@ class GamesController < ApplicationController
     end
   end
 
-  def create_table
-    head 500
+  def create_table(round_id)
+    Table.create({ round_id: round_id })
   end
 
   def construct_deck
