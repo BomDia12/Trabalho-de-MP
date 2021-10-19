@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   scope 'games' do
     post 'new', to: 'games#create_game'
+    post 'play', to: 'games#play'
   end
 
   get 'authentication_failure',

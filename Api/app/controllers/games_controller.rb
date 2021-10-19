@@ -14,6 +14,11 @@ class GamesController < ApplicationController
     render json: { message: e.message }, status: :unprocessable_entity
   end
 
+  # H6
+  def play
+    head 500
+  end
+
   private
 
   # H12 & H13
