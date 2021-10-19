@@ -13,20 +13,6 @@ class GamesController < ApplicationController
     render json: { message: e.message }, status: :unprocessable_entity
   end
 
-  def construct_hands
-    round = Round.find(params[:id])
-    hands = distribute_cards
-    (0...4).each do |i|
-      round.hands[i].card_a = hands[i][0]
-      round.hands[i].card_b = hands[i][1]
-      round.hands[i].card_c = hands[i][2]
-      round.hands[i].save!
-    end
-    render json: round.hands, status: :ok
-  rescue StandardError => e
-    render json: { message: e.message }, status: :bad_request
-  end
-
   private
 
   def create_round(game_id)
