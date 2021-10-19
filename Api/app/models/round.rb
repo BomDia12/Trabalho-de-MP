@@ -9,6 +9,14 @@ class ValidateEnded < ActiveModel::Validator
   end
 end
 
+class ValidateNumHands < ActiveModel::Validator
+  def validate(record)
+    if record.hands.size > 4
+      record.errors.add :hands, 'too many hands'
+    end
+  end
+end
+
 
 class Round < ApplicationRecord
   include ActiveModel::Validations
@@ -20,4 +28,6 @@ class Round < ApplicationRecord
   validates :ended, inclusion: [true, false], exclusion: [nil]
   validates_with ValidateEnded
   has_many :hands
+  validates_with ValidateNumHands
+
 end
