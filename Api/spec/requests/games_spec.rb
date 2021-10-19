@@ -30,7 +30,7 @@ RSpec.describe 'Games', type: :request do
   end
 
   describe 'POST play' do
-    context 'standard params' do
+    context 'sending card a on turn 0' do
       let(:game) { create(:game) }
       let(:round) { create(:round, game_id: game.id, turn: 0) }
       let(:hand) { create(:hand, round_id: round.id) }
@@ -61,6 +61,10 @@ RSpec.describe 'Games', type: :request do
 
       it 'places right card on table' do
         expect(round.tables.last.card_a).to eql '♠ 3'
+      end
+
+      it 'should advance to the next turn' do
+        expect(Round.find(round.id).turn).to eq 1
       end
     end
 
@@ -96,6 +100,10 @@ RSpec.describe 'Games', type: :request do
       it 'places right card on table' do
         expect(round.tables.last.card_b).to eql '♥ 2'
       end
+
+      it 'should advance to the next turn' do
+        expect(Round.find(round.id).turn).to eq 2
+      end
     end
 
     context 'sending card c and turn 2' do
@@ -130,6 +138,10 @@ RSpec.describe 'Games', type: :request do
       it 'places right card on table' do
         expect(round.tables.last.card_c).to eql '♦ 2'
       end
+
+      it 'should advance to the next turn' do
+        expect(Round.find(round.id).turn).to eq 3
+      end
     end
 
     context 'sending card c and turn 3' do
@@ -163,6 +175,10 @@ RSpec.describe 'Games', type: :request do
 
       it 'places right card on table' do
         expect(round.tables.last.card_d).to eql '♦ 2'
+      end
+
+      it 'should advance to the next turn' do
+        expect(Round.find(round.id).turn).to eq 0
       end
     end
   end
