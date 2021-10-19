@@ -44,6 +44,9 @@ class GamesController < ApplicationController
     else
       table.update!(card_d: card)
     end
+
+    round.update!(turn: round.turn == 3 ? 0 : round.turn + 1)
+
     render json: round, status: :ok
   rescue StandardError => e
     render json: { message: e.message }, status: :bad_request
