@@ -198,35 +198,31 @@ RSpec.describe 'Games', type: :request do
       let(:hand) { create(:hand, round_id: round.id) }
 
       it 'players should tie' do
-        before do
-          create(:table,
-                 round_id: round.id,
-                 card_a: '♥ 3',
-                 card_b: '♠ 3',
-                 card_c: '♥ 2',
-                 card_d: nil)
-          post '/games/play', params: {
-            hand_id: hand.id,
-            card: 'c'
-          }
-        end
+        create(:table,
+               round_id: round.id,
+               card_a: '♥ 3',
+               card_b: '♠ 3',
+               card_c: '♥ 2',
+               card_d: nil)
+        post '/games/play', params: {
+          hand_id: hand.id,
+          card: 'c'
+        }
         expect(Round.find(round.id).points_a).to eql 1
         expect(Round.find(round.id).points_b).to eql 1
       end
 
       it '1 and 3 should win' do
-        before do
-          create(:table,
-                 round_id: round.id,
-                 card_a: '♥ 3',
-                 card_b: '♥ 2',
-                 card_c: '♠ 3',
-                 card_d: nil)
-          post '/games/play', params: {
-            hand_id: hand.id,
-            card: 'c'
-          }
-        end
+        create(:table,
+               round_id: round.id,
+               card_a: '♥ 3',
+               card_b: '♥ 2',
+               card_c: '♠ 3',
+               card_d: nil)
+        post '/games/play', params: {
+          hand_id: hand.id,
+          card: 'c'
+        }
         expect(Round.find(round.id).points_a).to eql 0
         expect(Round.find(round.id).points_b).to eql 1
       end
