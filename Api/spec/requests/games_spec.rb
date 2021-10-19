@@ -30,9 +30,9 @@ RSpec.describe 'Games', type: :request do
   end
 
   describe 'POST play' do
-    context 'valid params' do
+    context 'standard params' do
       let(:game) { create(:game) }
-      let(:round) { create(:round, game_id: game.id) }
+      let(:round) { create(:round, game_id: game.id, turn: 0) }
       let(:hand) { create(:hand, round_id: round.id) }
       before do
         create(:table,
@@ -56,7 +56,7 @@ RSpec.describe 'Games', type: :request do
       end
 
       it 'removes card from hand' do
-        expect(hand.card_a).to be_nil
+        expect(Hand.find(hand.id).card_a).to be_nil
       end
 
       it 'places right card on table' do
