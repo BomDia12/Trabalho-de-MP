@@ -30,7 +30,7 @@ class GamesController < ApplicationController
   private
 
   def create_round(game_id)
-    Round.create({
+    round = Round.create({
                    game_id: game_id,
                    points_a: 0,
                    points_b: 0,
@@ -39,10 +39,20 @@ class GamesController < ApplicationController
                    turn: 0,
                    ended: false
                  })
+    create_hands(round.id)
   end
 
-  def create_hands
-    head 500
+  def create_hands(round_id)
+    hands = distribute_cards
+    (0..3).each do |i|
+      Hand.create({
+                    round_id: round_id,
+                    player: i,
+                    card_a: hands[i][0],
+                    card_b: hands[i][1],
+                    card_c: hands[i][2]
+                  })
+    end
   end
 
   def create_table
