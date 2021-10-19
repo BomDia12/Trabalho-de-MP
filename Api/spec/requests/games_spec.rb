@@ -52,16 +52,5 @@ RSpec.describe "Games", type: :request do
         expect(response).to have_http_status(:bad_request)
       end
     end
-
-    context "when there is more than 4 players in an round" do
-      before do
-      @hand5 = create(:hand, round_id: round.id)
-      end
-      before { get "/games/round_begins/#{round.id}" }
-      #it "should return an bad_request status" do
-      #  expect(response).to have_http_status(:bad_request)
-      #end
-      it { expect(round.hands.size).to eq(5) }
-    end
   end
 end
