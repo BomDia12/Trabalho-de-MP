@@ -26,5 +26,6 @@ class Round < ApplicationRecord
   validates :ended, inclusion: [true, false], exclusion: [nil]
   validates_with ValidateEnded
   has_many :hands
+  has_many :tables
   validates_with ValidateNumHands
 end
