@@ -151,9 +151,9 @@ RSpec.describe 'Games', type: :request do
       before do
         create(:table,
                round_id: round.id,
-               card_a: nil,
-               card_b: nil,
-               card_c: nil,
+               card_a: '♣ 4',
+               card_b: '♠ 3',
+               card_c: '♥ 2',
                card_d: nil)
         post '/games/play', params: {
           hand_id: hand.id,
@@ -174,11 +174,61 @@ RSpec.describe 'Games', type: :request do
       end
 
       it 'places right card on table' do
-        expect(round.tables.last.card_d).to eql '♦ 2'
+        expect(round.tables.first.card_d).to eql '♦ 2'
       end
 
       it 'should advance to the next turn' do
         expect(Round.find(round.id).turn).to eq 0
+      end
+
+      it 'should create a new table and new hands' do
+        expect(round.hands.size).to eql 5
+        expect(round.tables.size).to eql 2
+      end
+
+      it '0 and 2 should win' do
+        expect(Round.find(round.id).points_a).to eql 1
+        expect(Round.find(round.id).points_a).to eql 0
+      end
+    end
+
+    context 'test win conditions' do
+      let(:game) { create(:game) }
+      let(:round) { create(:round, game_id: game.id, turn: 3) }
+      let(:hand) { create(:hand, round_id: round.id) }
+
+      it 'players should tie' do
+        before do
+          create(:table,
+                 round_id: round.id,
+                 card_a: '♥ 3',
+                 card_b: '♠ 3',
+                 card_c: '♥ 2',
+                 card_d: nil)
+          post '/games/play', params: {
+            hand_id: hand.id,
+            card: 'c'
+          }
+        end
+        expect(Round.find(round.id).points_a).to eql 1
+        expect(Round.find(round.id).points_b).to eql 1
+      end
+
+      it '1 and 3 should win' do
+        before do
+          create(:table,
+                 round_id: round.id,
+                 card_a: '♥ 3',
+                 card_b: '♥ 2',
+                 card_c: '♠ 3',
+                 card_d: nil)
+          post '/games/play', params: {
+            hand_id: hand.id,
+            card: 'c'
+          }
+        end
+        expect(Round.find(round.id).points_a).to eql 0
+        expect(Round.find(round.id).points_b).to eql 1
       end
     end
   end

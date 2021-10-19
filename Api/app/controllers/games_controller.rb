@@ -68,7 +68,7 @@ class GamesController < ApplicationController
 
   # H5
   def construct_deck
-    suits = ['♠', '♥', '♣', '♦']
+    suits = %w[♠ ♥ ♣ ♦]
     normal_cards = %w[Q J K A 2 3]
     my_deck = ['♣ 4', '♦ 7', '♥ 7']
     suits.each do |suit|
