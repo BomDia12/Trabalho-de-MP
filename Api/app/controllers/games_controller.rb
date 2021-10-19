@@ -28,6 +28,18 @@ class GamesController < ApplicationController
 
   private
 
+  def create_round
+    head 500
+  end
+
+  def create_hands
+    head 500
+  end
+
+  def create_table
+    head 500
+  end
+
   def construct_deck
     suits = ['♠', '♥', '♣', '♦']
     normal_cards = %w[Q J K A 2 3]
