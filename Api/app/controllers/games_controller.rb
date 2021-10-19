@@ -9,14 +9,18 @@ class GamesController < ApplicationController
     end
 
     def construct_hands
-        ifround = Round.find(params[:id])
+        round = Round.find(params[:id])
         hands = distribute_cards
-        for i in 0...4
-            round.hands[i].card_a = distribute_cards[i][0]
-            round.hands[i].card_b = distribute_cards[i][1]
-            round.hands[i].card_c = distribute_cards[i][2]
+        if round.hands != []
+            for i in 0...4
+                round.hands[i].card_a = distribute_cards[i][0]
+                round.hands[i].card_b = distribute_cards[i][1]
+                round.hands[i].card_c = distribute_cards[i][2]
+            end
+            render json: round, status: :ok
+        else
+            head(:not_found)
         end
-        render json: round, status: :ok
     rescue StandardError => e
         render json: { message: e.message }, status: :bad_request
     end
