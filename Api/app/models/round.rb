@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ValidateEnded < ActiveModel::Validator
   def validate(record)
     if record.ended == true and (record.points_a < 2 and record.points_b < 2)
@@ -11,12 +12,9 @@ end
 
 class ValidateNumHands < ActiveModel::Validator
   def validate(record)
-    if record.hands.size > 4
-      record.errors.add :hands, 'too many hands'
-    end
+    record.errors.add :hands, 'too many hands' if record.hands.size > 4
   end
 end
-
 
 class Round < ApplicationRecord
   include ActiveModel::Validations
@@ -29,5 +27,4 @@ class Round < ApplicationRecord
   validates_with ValidateEnded
   has_many :hands
   validates_with ValidateNumHands
-
 end
