@@ -1,9 +1,9 @@
 class GamesController < ApplicationController
 
-    def teste
-        batata = Round.find(params[:id])
-        render json: batata.hands
-    end
+    #def teste
+     #   batata = Round.find(params[:id])
+    #    render json: batata.hands
+    #end
 
     def create_game
         game = Game.new(point_a: 0, point_b: 0)
@@ -22,11 +22,7 @@ class GamesController < ApplicationController
             round.hands[i].card_c = hands[i][2]
             round.hands[i].save!
         end
-        if round.hands == []
-            head(:not_found)
-        else
         render json: round.hands, status: :ok
-        end
     rescue StandardError => e
         render json: { message: e.message }, status: :bad_request
     end
