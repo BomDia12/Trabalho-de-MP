@@ -9,5 +9,6 @@ FactoryBot.define do
     multiplier_turn { 1 }
     turn { 1 }
     ended { false }
+    hands { [] }
   end
 end
