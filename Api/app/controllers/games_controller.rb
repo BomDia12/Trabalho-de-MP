@@ -7,6 +7,7 @@ class GamesController < ApplicationController
   def create_game
     game = Game.new(point_a: 0, point_b: 0)
     game.save!
+    round = create_round(game.id)
     render json: game, status: :created
   rescue StandardError => e
     render json: { message: e.message }, status: :unprocessable_entity
@@ -28,8 +29,16 @@ class GamesController < ApplicationController
 
   private
 
-  def create_round
-    head 500
+  def create_round(game_id)
+    Round.create({
+                   game_id: game_id,
+                   points_a: 0,
+                   points_b: 0,
+                   multiplier: 1,
+                   multiplier_turn: nil,
+                   turn: 0,
+                   ended: false
+                 })
   end
 
   def create_hands
