@@ -9,7 +9,7 @@ class GamesController < ApplicationController
     end
 
     def construct_hands
-        round = Round.find(params[:id])
+        ifround = Round.find(params[:id])
         hands = distribute_cards
         for i in 0...4
             round.hands[i].card_a = distribute_cards[i][0]

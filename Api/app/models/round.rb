@@ -19,4 +19,5 @@ class Round < ApplicationRecord
   validates :multiplier_turn, :turn, inclusion: 0..3
   validates :ended, inclusion: [true, false], exclusion: [nil]
   validates_with ValidateEnded
+  has_many :hands
 end
