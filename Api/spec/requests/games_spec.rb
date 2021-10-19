@@ -34,15 +34,13 @@ RSpec.describe 'Games', type: :request do
       let(:game) { create(:game) }
       let(:round) { create(:round, game_id: game.id) }
       let(:hand) { create(:hand, round_id: round.id) }
-      let(:table) do
+      before do
         create(:table,
                round_id: round.id,
                card_a: nil,
                card_b: nil,
                card_c: nil,
                card_d: nil)
-      end
-      before do
         post '/games/play', params: {
           hand_id: hand.id,
           card: 'a'
@@ -62,7 +60,7 @@ RSpec.describe 'Games', type: :request do
       end
 
       it 'places right card on table' do
-        expect(table.card_a).to eql '♠ 3'
+        expect(round.tables.last.card_a).to eql '♠ 3'
       end
     end
   end

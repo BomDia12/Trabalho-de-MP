@@ -16,7 +16,37 @@ class GamesController < ApplicationController
 
   # H6
   def play
-    head 500
+    hand = Hand.find(params[:hand_id])
+    round = hand.round
+    table = round.tables.last
+
+    case params[:card]
+    when 'a'
+      card = hand.card_a
+      hand.update!(card_a: nil)
+    when 'b'
+      card = hand.card_b
+      hand.update!(card_b: nil)
+    when 'c'
+      card = hand.card_c
+      hand.update!(card_c: nil)
+    else
+      render json: { message: 'card has to be a, b or c' }, status: :unprocessable_entity
+    end
+
+    case round.turn
+    when 0
+      table.update!(card_a: card)
+    when 1
+      table.update!(card_b: card)
+    when 2
+      table.update!(card_c: card)
+    else
+      table.update!(card_d: card)
+    end
+    render json: round, status: :ok
+  rescue StandardError => e
+    render json: { message: e.message }, status: :bad_request
   end
 
   private
