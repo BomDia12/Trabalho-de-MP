@@ -14,4 +14,12 @@ RSpec.describe "Games", type: :request do
       end
     end
   end
+
+  describe "GET construct_hands" do
+    let(:round) { create :round } 
+    context "when the players have cards" do
+      before { get "/games/round_begins/#{round.id}" }
+      it { expect(response).to have_http_status(:ok) }
+    end
+  end
 end
