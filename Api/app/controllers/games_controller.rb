@@ -20,30 +20,8 @@ class GamesController < ApplicationController
     round = hand.round
     table = round.tables.last
 
-    case params[:card]
-    when 'a'
-      card = hand.card_a
-      hand.update!(card_a: nil)
-    when 'b'
-      card = hand.card_b
-      hand.update!(card_b: nil)
-    when 'c'
-      card = hand.card_c
-      hand.update!(card_c: nil)
-    else
-      render json: { message: 'card has to be a, b or c' }, status: :unprocessable_entity
-    end
-
-    case round.turn
-    when 0
-      table.update!(card_a: card)
-    when 1
-      table.update!(card_b: card)
-    when 2
-      table.update!(card_c: card)
-    else
-      table.update!(card_d: card)
-    end
+    card = select_card_from_hand(params[:card], hand)
+    insert_card_into_table(card, round.turn, table)
 
     round.update!(turn: round.turn == 3 ? 0 : round.turn + 1)
 
@@ -113,5 +91,37 @@ class GamesController < ApplicationController
       end
     end
     hands
+  end
+
+  # H6
+  def select_card_from_hand(card_letter, hand)
+    case card_letter
+    when 'a'
+      card = hand.card_a
+      hand.update!(card_a: nil)
+    when 'b'
+      card = hand.card_b
+      hand.update!(card_b: nil)
+    when 'c'
+      card = hand.card_c
+      hand.update!(card_c: nil)
+    else
+      render json: { message: 'card has to be a, b or c' }, status: :unprocessable_entity
+    end
+    card
+  end
+
+  # H6
+  def insert_card_into_table(card, turn, table)
+    case turn
+    when 0
+      table.update!(card_a: card)
+    when 1
+      table.update!(card_b: card)
+    when 2
+      table.update!(card_c: card)
+    else
+      table.update!(card_d: card)
+    end
   end
 end
