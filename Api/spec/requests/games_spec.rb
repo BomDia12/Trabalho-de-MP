@@ -227,5 +227,65 @@ RSpec.describe 'Games', type: :request do
         expect(Round.find(round.id).points_b).to eql 1
       end
     end
+
+    context 'test end of round' do
+      let(:game) { create(:game) }
+      let(:round) do
+        create(:round,
+               game_id: game.id,
+               turn: 3,
+               points_a: 1,
+               points_b: 1)
+      end
+      let(:hand) { create(:hand, round_id: round.id) }
+
+      context 'odd players win' do
+        before do
+          create(:table,
+                 round_id: round.id,
+                 card_a: '♥ A',
+                 card_b: '♥ 2',
+                 card_c: '♠ Q',
+                 card_d: nil)
+          post '/games/play', params: {
+            hand_id: hand.id,
+            card: 'c'
+          }
+        end
+
+        it 'should create new round' do
+          expect(game.rounds.last.id).to_not eql round.id
+        end
+
+        it 'should update points' do
+          expect(Game.find(game.id).point_a).to eql 1
+          expect(Game.find(game.id).point_b).to eql 2
+        end
+      end
+
+      context 'even players win' do
+        before do
+          create(:table,
+                 round_id: round.id,
+                 card_a: '♣ 4',
+                 card_b: '♠ 3',
+                 card_c: '♥ 2',
+                 card_d: nil)
+          post '/games/play', params: {
+            hand_id: hand.id,
+            card: 'c'
+          }
+        end
+
+        it 'should create new round' do
+          expect(game.rounds.last.id).to_not eql round.id
+        end
+
+        it 'should update points' do
+          expect(Game.find(game.id).point_a).to eql 2
+          expect(Game.find(game.id).point_b).to eql 1
+        end
+      end
+    end
   end
 end
