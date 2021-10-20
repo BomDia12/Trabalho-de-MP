@@ -1,8 +1,4 @@
 class GamesController < ApplicationController
-  # def teste
-  #   batata = Round.find(params[:id])
-  #    render json: batata.hands
-  # end
 
   # H12 & H13
   def create_game
