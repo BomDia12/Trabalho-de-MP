@@ -188,7 +188,7 @@ RSpec.describe 'Games', type: :request do
 
       it '0 and 2 should win' do
         expect(Round.find(round.id).points_a).to eql 1
-        expect(Round.find(round.id).points_a).to eql 0
+        expect(Round.find(round.id).points_b).to eql 0
       end
     end
 
@@ -215,9 +215,9 @@ RSpec.describe 'Games', type: :request do
       it '1 and 3 should win' do
         create(:table,
                round_id: round.id,
-               card_a: '♥ 3',
+               card_a: '♥ A',
                card_b: '♥ 2',
-               card_c: '♠ 3',
+               card_c: '♠ Q',
                card_d: nil)
         post '/games/play', params: {
           hand_id: hand.id,

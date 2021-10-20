@@ -23,7 +23,11 @@ class GamesController < ApplicationController
     card = select_card_from_hand(params[:card], hand)
     insert_card_into_table(card, round.turn, table)
 
-    round.update!(turn: round.turn == 3 ? 0 : round.turn + 1)
+    if round.turn == 3
+      finish_table(round)
+    else
+      round.update!(turn: round.turn + 1)
+    end
 
     render json: round, status: :ok
   rescue StandardError => e
@@ -122,6 +126,50 @@ class GamesController < ApplicationController
       table.update!(card_c: card)
     else
       table.update!(card_d: card)
+    end
+  end
+
+  # H6
+  def finish_table(round)
+    table = round.tables.last
+    even_card = check_stronger_card(table.card_a, table.card_c)
+    odd_card = check_stronger_card(table.card_b, table.card_d)
+    winner = check_stronger_card(
+      even_card == 1 ? table.card_a : table.card_c,
+      odd_card == 1 ? table.card_b : table.card_d
+    )
+    check_winner(winner, round)
+    round = Round.find(round.id)
+    round.update!(turn: 0)
+    create_table(round.id)
+    create_hands(round.id)
+  end
+
+  def check_winner(winner, round)
+    case winner
+    when 1
+      round.update!(points_a: round.points_a + 1)
+    when 2
+      round.update!(points_b: round.points_b + 1)
+    else
+      round.update!(points_a: round.points_a + 1,
+                    points_b: round.points_b + 1)
+    end
+  end
+
+  def check_stronger_card(card_1, card_2)
+    manilhas = ['♣ 4', '♥ 7', '♠ A', '♦ 7']
+    manilhas.each do |manilha|
+      return 1 if card_1 == manilha
+      return 2 if card_2 == manilha
+    end
+    order = %w[3 2 A K J Q]
+    card_1 = card_1.split[1]
+    card_2 = card_2.split[1]
+    order.each do |symbol|
+      return 3 if card_1 == symbol && card_2 == symbol
+      return 1 if card_1 == symbol
+      return 2 if card_2 == symbol
     end
   end
 end
