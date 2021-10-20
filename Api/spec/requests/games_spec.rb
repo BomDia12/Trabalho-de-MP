@@ -27,6 +27,92 @@ RSpec.describe 'Games', type: :request do
         expect(game.rounds.first.tables.first).to_not be_nil
       end
     end
+
+    context 'adds uses to game' do
+      let(:game) { Game.last }
+      let(:user1) { create(:user, email: '1@mail') }
+      let(:user2) { create(:user, email: '2@mail') }
+      let(:user3) { create(:user, email: '3@mail') }
+      let(:user4) { create(:user, email: '4@mail') }
+      let(:user5) { create(:user, email: '5@mail') }
+      it '1 user' do
+        post '/games/new', params: {
+          users: [
+            user1.id
+          ]
+        }
+        expect(user1.games.last.id).to eql game.id
+      end
+
+      it '2 user' do
+        post '/games/new', params: {
+          users: [
+            user1.id,
+            user2.id
+          ]
+        }
+        expect(user1.games.last.id).to eql game.id
+        expect(user2.games.last.id).to eql game.id
+      end
+
+      it '3 user' do
+        post '/games/new', params: {
+          users: [
+            user1.id,
+            user2.id,
+            user3.id
+          ]
+        }
+        expect(user1.games.last.id).to eql game.id
+        expect(user2.games.last.id).to eql game.id
+        expect(user3.games.last.id).to eql game.id
+      end
+
+      it '4 user' do
+        post '/games/new', params: {
+          users: [
+            user1.id,
+            user2.id,
+            user3.id,
+            user4.id
+          ]
+        }
+        expect(user1.games.last.id).to eql game.id
+        expect(user2.games.last.id).to eql game.id
+        expect(user3.games.last.id).to eql game.id
+        expect(user4.games.last.id).to eql game.id
+      end
+
+      context 'invalid number of users' do
+        before do
+          post '/games/new', params: {
+            users: [
+              user1.id,
+              user2.id,
+              user3.id,
+              user4.id,
+              user5.id
+            ]
+          }
+        end
+
+        it 'returns error' do
+          expect(response).to have_http_status :unprocessable_entity
+        end
+
+        it 'returns error message' do
+          expect(response.body).to eql 'Please enter at most 4 users'
+        end
+
+        it 'should create game_users' do
+          expect(user1.user_games.size).to eql 0
+          expect(user2.user_games.size).to eql 0
+          expect(user3.user_games.size).to eql 0
+          expect(user4.user_games.size).to eql 0
+          expect(user5.user_games.size).to eql 0
+        end
+      end
+    end
   end
 
   describe 'POST play' do
