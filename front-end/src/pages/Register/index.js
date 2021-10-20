@@ -1,9 +1,9 @@
 // Arquivo da página inicial
-import { Container } from "./styles"
+import { RegisterContainer } from "./styles"
 
 const Register = () => {
     return (
-        <Container>Cadastro</Container>
+        <RegisterContainer>Cadastro</RegisterContainer>
     )
 }
 
