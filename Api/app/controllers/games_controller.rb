@@ -23,7 +23,7 @@ class GamesController < ApplicationController
     insert_card_into_table(card, round.turn, table)
 
     if round.turn == 3
-      finish_table(round)
+      return render json: round.game unless finish_table(round)
     else
       round.update!(turn: round.turn + 1)
     end
@@ -152,18 +152,19 @@ class GamesController < ApplicationController
       even_card == 1 ? table.card_a : table.card_c,
       odd_card == 1 ? table.card_b : table.card_d
     )
-    check_winner(winner, round)
+    check_round_winner(winner, round)
     round = Round.find(round.id)
     round.update!(turn: 0)
     if round.points_a == 2 || round.points_b == 2
       finish_round(round)
+      false
     else
       create_table(round.id)
       create_hands(round.id)
     end
   end
 
-  def check_winner(winner, round)
+  def check_round_winner(winner, round)
     case winner
     when 1
       round.update!(points_a: round.points_a + 1)
@@ -198,6 +199,29 @@ class GamesController < ApplicationController
     else
       game.update!(point_b: game.point_b + round.multiplier)
     end
+    round.update!(ended: true)
     create_round(game.id)
+    game = Game.find(game.id)
+    check_end_game(game)
+  end
+
+  def check_end_game(game)
+    if game.point_a >= 12
+      win_game(game, true)
+    elsif game.point_b >= 12
+      win_game(game, false)
+    else
+      false
+    end
+  end
+
+  def win_game(game, even_winner)
+    game.user_games.each do |user_game|
+      if (even_winner && user_game.player.even?) || (!even_winner && user_game.player.odd?)
+        user_game.update!(winner: true)
+      else
+        user_game.update!(winner: false)
+      end
+    end
   end
 end

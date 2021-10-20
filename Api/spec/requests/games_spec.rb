@@ -391,18 +391,16 @@ RSpec.describe 'Games', type: :request do
       let(:odd_user) { create(:user, email: 'odd@mail') }
       let(:game) { create(:game, point_a: 11, point_b: 11) }
       let(:round) { create(:round, game_id: game.id, points_b: 1, points_a: 1) }
-      let(:table) do
+      let(:hand) { create(:hand, card_a: '♣ 4', card_b: '♥ 2', round_id: round.id) }
+      before do
+        create(:user_game, user_id: even_user.id, game_id: game.id, player: 0)
+        create(:user_game, user_id: odd_user.id, game_id: game.id, player: 1)
         create(:table,
                round_id: round.id,
                card_a: '♥ 3',
                card_b: '♥ 2',
                card_c: '♠ Q',
                card_d: nil)
-      end
-      let(:hand) { create(:hand, card_a: '♣ 4') }
-      before do
-        create(:user_game, user_id: even_user.id, game_id: game.id, player: 0)
-        create(:user_game, user_id: odd_user.id, game_id: game.id, player: 1)
       end
 
       context 'even win' do
@@ -411,6 +409,10 @@ RSpec.describe 'Games', type: :request do
             hand_id: hand.id,
             card: 'b'
           }
+        end
+
+        it 'should add points to even' do
+          expect(Game.find(game.id).point_a).to eql 12
         end
 
         it 'should return ok' do
