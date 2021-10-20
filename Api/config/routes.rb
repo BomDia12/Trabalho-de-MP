@@ -11,6 +11,11 @@ Rails.application.routes.draw do
     put 'edit', to: 'user#edit'
   end
 
+  scope 'games' do
+    post 'new', to: 'games#create_game'
+    post 'play', to: 'games#play'
+  end
+
   get 'authentication_failure',
       to: 'application#authentication_failure',
       as: :authentication_failure
