@@ -15,7 +15,6 @@ RSpec.describe Round, type: :model do
       it { expect(build(:round, multiplier: nil)).to be_invalid }
       it { expect(build(:round, turn: nil)).to be_invalid }
       it { expect(build(:round, ended: nil)).to be_invalid }
-
     end
 
     context 'when points are invalid' do
