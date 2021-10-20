@@ -101,7 +101,7 @@ RSpec.describe 'Games', type: :request do
         end
 
         it 'returns error message' do
-          expect(response.body).to eql "{\"message\":\"Please enter at most 4 users\"}"
+          expect(response.body).to eql '{"message":"Please enter at most 4 users"}'
         end
 
         it 'should create game_users' do
@@ -351,6 +351,10 @@ RSpec.describe 'Games', type: :request do
           expect(Game.find(game.id).point_a).to eql 1
           expect(Game.find(game.id).point_b).to eql 2
         end
+
+        it 'should change round status to ended' do
+          expect(Round.find(round.id).ended).to eql true
+        end
       end
 
       context 'even players win' do
@@ -378,6 +382,68 @@ RSpec.describe 'Games', type: :request do
         it 'should update points' do
           expect(Game.find(game.id).point_a).to eql 2
           expect(Game.find(game.id).point_b).to eql 1
+        end
+      end
+    end
+
+    context 'test end of game' do
+      let(:even_user) { create(:user) }
+      let(:odd_user) { create(:user, email: 'odd@mail') }
+      let(:game) { create(:game, point_a: 11, point_b: 11) }
+      let(:round) { create(:round, game_id: game.id, points_b: 1, points_a: 1) }
+      let(:table) do
+        create(:table,
+               round_id: round.id,
+               card_a: '♥ 3',
+               card_b: '♥ 2',
+               card_c: '♠ Q',
+               card_d: nil)
+      end
+      let(:hand) { create(:hand, card_a: '♣ 4') }
+      before do
+        create(:user_game, user_id: even_user.id, game_id: game.id, player: 0)
+        create(:user_game, user_id: odd_user.id, game_id: game.id, player: 1)
+      end
+
+      context 'even win' do
+        before do
+          post '/games/play', params: {
+            hand_id: hand.id,
+            card: 'b'
+          }
+        end
+
+        it 'should return ok' do
+          expect(response).to have_http_status :ok
+        end
+
+        it 'should update winner for winner' do
+          expect(even_user.user_games.last.winner).to eql true
+        end
+
+        it 'should update winner for loser' do
+          expect(odd_user.user_games.last.winner).to eql false
+        end
+      end
+
+      context 'odd win' do
+        before do
+          post '/games/play', params: {
+            hand_id: hand.id,
+            card: 'a'
+          }
+        end
+
+        it 'should return ok' do
+          expect(response).to have_http_status :ok
+        end
+
+        it 'should update winner for winner' do
+          expect(odd_user.user_games.last.winner).to eql true
+        end
+
+        it 'should update winner for loser' do
+          expect(even_user.user_games.last.winner).to eql false
         end
       end
     end

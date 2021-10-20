@@ -6,6 +6,7 @@ class GamesController < ApplicationController
     if create_players(params[:users], game.id)
       return render json: { message: 'Please enter at most 4 users' }, status: :unprocessable_entity
     end
+
     create_round(game.id)
     render json: game, status: :created
   rescue StandardError => e
