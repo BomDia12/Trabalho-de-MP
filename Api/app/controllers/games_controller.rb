@@ -3,6 +3,9 @@ class GamesController < ApplicationController
   def create_game
     game = Game.new(point_a: 0, point_b: 0)
     game.save!
+    if create_players(params[:users], game.id)
+      return render json: { message: 'Please enter at most 4 users' }, status: :unprocessable_entity
+    end
     create_round(game.id)
     render json: game, status: :created
   rescue StandardError => e
@@ -30,6 +33,21 @@ class GamesController < ApplicationController
   end
 
   private
+
+  def create_players(users, game_id)
+    return nil if users.nil?
+
+    return 'Too many users' if users.size > 4
+
+    (0...users.size).each do |i|
+      UserGame.create(
+        user_id: users[i],
+        game_id: game_id,
+        player: i
+      )
+    end
+    nil
+  end
 
   # H12 & H13
   def create_round(game_id)

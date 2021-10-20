@@ -101,7 +101,7 @@ RSpec.describe 'Games', type: :request do
         end
 
         it 'returns error message' do
-          expect(response.body).to eql 'Please enter at most 4 users'
+          expect(response.body).to eql "{\"message\":\"Please enter at most 4 users\"}"
         end
 
         it 'should create game_users' do
