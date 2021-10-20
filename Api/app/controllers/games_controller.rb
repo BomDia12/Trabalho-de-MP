@@ -8,7 +8,7 @@ class GamesController < ApplicationController
   def create_game
     game = Game.new(point_a: 0, point_b: 0)
     game.save!
-    round = create_round(game.id)
+    create_round(game.id)
     render json: game, status: :created
   rescue StandardError => e
     render json: { message: e.message }, status: :unprocessable_entity
@@ -141,8 +141,12 @@ class GamesController < ApplicationController
     check_winner(winner, round)
     round = Round.find(round.id)
     round.update!(turn: 0)
-    create_table(round.id)
-    create_hands(round.id)
+    if round.points_a == 2 || round.points_b == 2
+      finish_round(round)
+    else
+      create_table(round.id)
+      create_hands(round.id)
+    end
   end
 
   def check_winner(winner, round)
@@ -171,5 +175,15 @@ class GamesController < ApplicationController
       return 1 if card_1 == symbol
       return 2 if card_2 == symbol
     end
+  end
+
+  def finish_round(round)
+    game = round.game
+    if round.points_a == 2
+      game.update!(point_a: game.point_a + round.multiplier)
+    else
+      game.update!(point_b: game.point_b + round.multiplier)
+    end
+    create_round(game.id)
   end
 end

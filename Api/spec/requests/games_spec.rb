@@ -253,6 +253,10 @@ RSpec.describe 'Games', type: :request do
           }
         end
 
+        it 'expect to have success status' do
+          expect(response).to have_http_status :ok
+        end
+
         it 'should create new round' do
           expect(game.rounds.last.id).to_not eql round.id
         end
@@ -275,6 +279,10 @@ RSpec.describe 'Games', type: :request do
             hand_id: hand.id,
             card: 'c'
           }
+        end
+
+        it 'expect to have success status' do
+          expect(response).to have_http_status :ok
         end
 
         it 'should create new round' do

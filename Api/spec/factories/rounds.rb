@@ -6,7 +6,7 @@ FactoryBot.define do
     points_a { 0 }
     points_b { 0 }
     multiplier { 1 }
-    multiplier_turn { 1 }
+    multiplier_turn { nil }
     turn { 1 }
     ended { false }
   end
