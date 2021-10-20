@@ -10,7 +10,6 @@ class ValidateEnded < ActiveModel::Validator
   end
 end
 
-
 class Round < ApplicationRecord
   include ActiveModel::Validations
   belongs_to :game

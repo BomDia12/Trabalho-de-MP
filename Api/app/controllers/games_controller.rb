@@ -1,5 +1,4 @@
 class GamesController < ApplicationController
-
   # H12 & H13
   def create_game
     game = Game.new(point_a: 0, point_b: 0)
