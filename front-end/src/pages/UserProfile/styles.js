@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const ContainerPrincipal = styled.div`
     background-color: var(--prussian-blue);
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
 `;
 
 export const ContainerBoxPerfil = styled.div`
@@ -17,7 +17,7 @@ export const BoxPerfil = styled.div`
     
     width: 50%;
     height: 100%;
-    background-color: var(--army-geen);
+    background-color: var(--army-green);
     display: flex;
     align-items: center;
     justify-content: flex-start;

@@ -7,7 +7,7 @@ import {
     FormContainer,
     SecondContainer,
     ThirdContainer
-} from './styled'
+} from './styles'
 
 import Card from '../../components/cards'
 import naipe1 from '../../assets/naipes/naipe1.png'
