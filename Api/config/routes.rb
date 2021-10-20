@@ -14,6 +14,10 @@ Rails.application.routes.draw do
   scope 'games' do
     post 'new', to: 'games#create_game'
     post 'play', to: 'games#play'
+    get '/:id', to: 'games#show_game'
+    get '/round/:id', to: 'games#show_round'
+    get '/hand/:id', to: 'games#show_hand'
+    get '/table/:id', to: 'games#show_table'
   end
 
   get 'authentication_failure',

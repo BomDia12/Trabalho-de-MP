@@ -13,6 +13,22 @@ class GamesController < ApplicationController
     render json: { message: e.message }, status: :unprocessable_entity
   end
 
+  def show_game
+    head 500
+  end
+
+  def show_round
+    head 500
+  end
+
+  def show_hand
+    head 500
+  end
+
+  def show_table
+    head 500
+  end
+
   # H6
   def play
     hand = Hand.find(params[:hand_id])

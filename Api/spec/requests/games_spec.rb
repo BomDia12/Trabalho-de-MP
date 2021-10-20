@@ -450,4 +450,112 @@ RSpec.describe 'Games', type: :request do
       end
     end
   end
+
+  describe 'GET show game' do
+    let(:game) { create(:game) }
+    context 'has valid params' do
+      before do
+        get "/games/#{game.id}"
+      end
+
+      it 'should be successful' do
+        expect(response).to have_http_status :ok
+      end
+
+      it 'should return json' do
+        expect(response.content_type).to eq('application/json; charset=utf-8')
+      end
+    end
+
+    context 'has invalid params' do
+      before do
+        get "/games/#{game.id + 1}"
+      end
+
+      it 'should return error' do
+        expect(response).to have_http_status :not_found
+      end
+    end
+  end
+
+  describe 'GET show round' do
+    let(:round) { create(:round) }
+    context 'has valid params' do
+      before do
+        get "/games/round/#{round.id}"
+      end
+
+      it 'should be successful' do
+        expect(response).to have_http_status :ok
+      end
+
+      it 'should return json' do
+        expect(response.content_type).to eq('application/json; charset=utf-8')
+      end
+    end
+
+    context 'has invalid params' do
+      before do
+        get "/games/round/#{round.id + 1}"
+      end
+
+      it 'should return error' do
+        expect(response).to have_http_status :not_found
+      end
+    end
+  end
+
+  describe 'GET show hand' do
+    let(:hand) { create(:hand) }
+    context 'has valid params' do
+      before do
+        get "/games/hand/#{hand.id}"
+      end
+
+      it 'should be successful' do
+        expect(response).to have_http_status :ok
+      end
+
+      it 'should return json' do
+        expect(response.content_type).to eq('application/json; charset=utf-8')
+      end
+    end
+
+    context 'has invalid params' do
+      before do
+        get "/games/hand/#{hand.id + 1}"
+      end
+
+      it 'should return error' do
+        expect(response).to have_http_status :not_found
+      end
+    end
+  end
+
+  describe 'GET show table' do
+    let(:table) { create(:table) }
+    context 'has valid params' do
+      before do
+        get "/games/table/#{table.id}"
+      end
+
+      it 'should be successful' do
+        expect(response).to have_http_status :ok
+      end
+
+      it 'should return json' do
+        expect(response.content_type).to eq('application/json; charset=utf-8')
+      end
+    end
+
+    context 'has invalid params' do
+      before do
+        get "/games/table/#{table.id + 1}"
+      end
+
+      it 'should return error' do
+        expect(response).to have_http_status :not_found
+      end
+    end
+  end
 end
