@@ -24,6 +24,7 @@ export const Table = styled.div`
   justify-content: center;
   align-items: center;
 
-  font-family: 'Cinzel', serif;
-  font-size: 64px;
+  font-family: "Cinzel", serif;
+  font-size: 4rem;
+  color: white;
 `;
