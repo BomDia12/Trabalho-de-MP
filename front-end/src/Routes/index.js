@@ -3,13 +3,15 @@ import { Switch, Route } from 'react-router'
 import HomePage from '../pages/HomePage'
 import UserProfile from '../pages/UserProfile'
 import Rules from '../pages/GameRules'
+import Game from '../pages/Game'
 
 const Routes = () => {
   return (
     <Switch>
       <Route exact path='/' component={HomePage} />
-      <Route path='/user_perfil' component={UserProfile} />
       <Route exact path='/rules' component={Rules} />
+      <Route path='/user_perfil' component={UserProfile} />
+      <Route path='/game' component={Game} />
     </Switch>
   )
 }
