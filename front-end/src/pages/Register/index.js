@@ -1,9 +1,16 @@
 // Arquivo da página inicial
 import { RegisterContainer } from "./styles"
 
+import PageName from '../../components/pageName'
+
+
 const Register = () => {
     return (
-        <RegisterContainer>Cadastro</RegisterContainer>
+        <RegisterContainer>
+            <PageName 
+                title= "Cadastro"
+            />
+        </RegisterContainer>
     )
 }
 
