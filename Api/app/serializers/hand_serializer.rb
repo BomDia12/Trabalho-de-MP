@@ -1,5 +1,5 @@
 class HandSerializer < ActiveModel::Serializer
   attributes :id, :card_a, :card_b, :card_c, :player
 
-  belongs_to :rounds, serializer: RoundSerializer
+  belongs_to :round, serializer: RoundSerializer
 end
