@@ -390,8 +390,8 @@ RSpec.describe 'Games', type: :request do
       let(:even_user) { create(:user) }
       let(:odd_user) { create(:user, email: 'odd@mail') }
       let(:game) { create(:game, point_a: 11, point_b: 11) }
-      let(:round) { create(:round, game_id: game.id, points_b: 1, points_a: 1) }
-      let(:hand) { create(:hand, card_a: '♣ 4', card_b: '♥ 2', round_id: round.id) }
+      let(:round) { create(:round, game_id: game.id, points_b: 1, points_a: 1, turn: 3) }
+      let(:hand) { create(:hand, card_a: '♣ 4', card_b: '♥ J', round_id: round.id) }
       before do
         create(:user_game, user_id: even_user.id, game_id: game.id, player: 0)
         create(:user_game, user_id: odd_user.id, game_id: game.id, player: 1)
