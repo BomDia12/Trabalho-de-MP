@@ -14,19 +14,31 @@ class GamesController < ApplicationController
   end
 
   def show_game
-    head 500
+    game = Game.find params[:id]
+    render json: game
+  rescue StandardError => e
+    render json: { message: e.message }, status: :not_found
   end
 
   def show_round
-    head 500
+    round = Round.find params[:id]
+    render json: round
+  rescue StandardError => e
+    render json: { message: e.message }, status: :not_found
   end
 
   def show_hand
-    head 500
+    hand = Hand.find params[:id]
+    render json: hand
+  rescue StandardError => e
+    render json: { message: e.message }, status: :not_found
   end
 
   def show_table
-    head 500
+    table = Table.find params[:id]
+    render json: table
+  rescue StandardError => e
+    render json: { message: e.message }, status: :not_found
   end
 
   # H6
