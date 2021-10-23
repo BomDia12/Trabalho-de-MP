@@ -61,6 +61,14 @@ class GamesController < ApplicationController
     render json: { message: e.message }, status: :bad_request
   end
 
+  def ask_truco
+    head 500
+  end
+
+  def truco_response
+    head 500
+  end
+
   private
 
   def create_players(users, game_id)

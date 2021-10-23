@@ -558,4 +558,98 @@ RSpec.describe 'Games', type: :request do
       end
     end
   end
+
+  describe 'POST ask truco' do
+    let(:round) { create(:round) }
+    context 'valid params' do
+      before do
+        post '/games/truco/ask', params: {
+          player: 0,
+          round_id: round.id
+        }
+      end
+
+      it 'should return ok' do
+        expect(response).to have_http_status :ok
+      end
+
+      it 'should update round' do
+        updated = Round.find round.id
+        expect(updated.awaiting_confirmation).to eql true
+        expect(updated.multiplier_turn).to eql 0
+      end
+    end
+
+    context 'other players ask for truco' do
+      it 'player 1' do
+        post '/games/truco/ask', params: {
+          player: 1,
+          round_id: round.id
+        }
+        updated = Round.find round.id
+        expect(updated.awaiting_confirmation).to eql true
+        expect(updated.multiplier_turn).to eql 1
+      end
+
+      it 'player 2' do
+        post '/games/truco/ask', params: {
+          player: 2,
+          round_id: round.id
+        }
+        updated = Round.find round.id
+        expect(updated.awaiting_confirmation).to eql true
+        expect(updated.multiplier_turn).to eql 2
+      end
+
+      it 'player 3' do
+        post '/games/truco/ask', params: {
+          player: 3,
+          round_id: round.id
+        }
+        updated = Round.find round.id
+        expect(updated.awaiting_confirmation).to eql true
+        expect(updated.multiplier_turn).to eql 3
+      end
+    end
+
+    context 'invalid params' do
+      it 'round does not exist' do
+        post '/games/truco/ask', params: {
+          player: 3,
+          round_id: round.id + 1
+        }
+        expect(response).to have_http_status :not_found
+      end
+
+      it 'player is not in 0..3' do
+        post '/games/truco/ask', params: {
+          player: 4,
+          round_id: round.id
+        }
+        message = { message: 'O jogador tem que estar entre 0 e 3' }
+        expect(response).to have_http_status :bad_request
+        expect(response.body).to eql message.to_s
+      end
+
+      it 'player has asked for the last multiplier' do
+        post '/games/truco/ask', params: {
+          player: 0,
+          round_id: create(:round, multiplier_turn: 0)
+        }
+        message = { message: 'Você ou o seu parceiro pediram truco pela última vez' }
+        expect(response).to have_http_status :bad_request
+        expect(response.body).to eql message.to_s
+      end
+
+      it "player's partner has asked for the last multiplier" do
+        post '/games/truco/ask', params: {
+          player: 1,
+          round_id: create(:round, multiplier_turn: 3)
+        }
+        message = { message: 'Você ou o seu parceiro pediram truco pela última vez' }
+        expect(response).to have_http_status :bad_request
+        expect(response.body).to eql message.to_s
+      end
+    end
+  end
 end

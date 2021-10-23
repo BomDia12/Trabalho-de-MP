@@ -18,6 +18,10 @@ Rails.application.routes.draw do
     get '/round/:id', to: 'games#show_round'
     get '/hand/:id', to: 'games#show_hand'
     get '/table/:id', to: 'games#show_table'
+    scope 'truco' do
+      post 'ask', to: 'games#ask_truco'
+      post 'response', to: 'games#truco_response'
+    end
   end
 
   get 'authentication_failure',
