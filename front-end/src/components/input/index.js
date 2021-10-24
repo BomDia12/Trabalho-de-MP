@@ -5,7 +5,7 @@ const Input = ({label,name,type,id}) => {
     return (
         <Container> 
             <label htmlFor={id}>{label}</label>
-            <input name={name} type={type} id={id} size="30px"/>
+            <input name={name} type={type} id={id}/>
         </Container>
     )
 }

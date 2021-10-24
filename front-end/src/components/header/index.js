@@ -4,7 +4,7 @@ import {Container, Image} from './styles'
 const Header = ({icon}) => {
     return (
         <Container> 
-            <Image src={icon} alt="Naipe da carta"/>
+            <Image src={icon} alt="Voltar"/>
         </Container>
     )
 }
