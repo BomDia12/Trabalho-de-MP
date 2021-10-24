@@ -652,4 +652,130 @@ RSpec.describe 'Games', type: :request do
       end
     end
   end
+
+  describe 'POST truco response' do
+    let(:round) { create(:round, awaiting_confirmation: true, multiplier_turn: 0) }
+    context 'valid params' do
+      context 'Yes response' do
+        before do
+          post '/games/truco/respose', params: {
+            response: 'y',
+            round_id: round.id
+          }
+        end
+
+        it 'should return ok' do
+          expect(response).to have_http_status :ok
+        end
+
+        it 'should update round' do
+          expect(Round.find(round.id).multiplier).to eql 3
+          expect(Round.find(round.id).awaiting_confirmation).to eql false
+        end
+      end
+
+      context 'negative response' do
+        before do
+          post '/games/truco/respose', params: {
+            response: 'n',
+            round_id: round.id
+          }
+        end
+
+        it 'should return ok response' do
+          expect(response).to have_http_status :ok
+        end
+
+        it 'should update round' do
+          expect(Round.find(round.id).ended).to eql true
+          expect(Round.find(round.id).awaiting_confirmation).to eql false
+          expect(Round.find(round.id).points_a).to eql 2
+        end
+
+        it 'should update game' do
+          expect(Game.find(round.game_id).point_a).to eql 2
+        end
+      end
+
+      context 'raise response' do
+        before do
+          post '/games/truco/respose', params: {
+            response: 'r',
+            round_id: round.id
+          }
+        end
+
+        it 'should return ok' do
+          expect(response).to have_http_status :ok
+        end
+
+        it 'should update round' do
+          expect(Round.find(round.id).multiplier).to eql 3
+          expect(Round.find(round.id).awaiting_confirmation).to eql true
+          expect(Round.find(round.id).multiplier_turn).to eql 1
+        end
+      end
+    end
+
+    context "check when multiplier isn't 1" do
+      it 'when multiplier is 3' do
+        round = create(:round, awaiting_confirmation: true, multiplier_turn: 0, multiplier: 3)
+        post '/games/truco/respose', params: {
+          response: 'y',
+          round_id: round.id
+        }
+        expect(Round.find(round.id).multiplier).to eql 6
+      end
+
+      it 'when multiplier is 6' do
+        round = create(:round, awaiting_confirmation: true, multiplier_turn: 0, multiplier: 6)
+        post '/games/truco/respose', params: {
+          response: 'y',
+          round_id: round.id
+        }
+        expect(Round.find(round.id).multiplier).to eql 9
+      end
+
+      it 'when multiplier is 9' do
+        round = create(:round, awaiting_confirmation: true, multiplier_turn: 0, multiplier: 9)
+        post '/games/truco/respose', params: {
+          response: 'y',
+          round_id: round.id
+        }
+        expect(Round.find(round.id).multiplier).to eql 12
+      end
+    end
+
+    context 'invalid params' do
+      it 'when is not awaiting confirmation' do
+        round = create(:round, awaiting_confirmation: false, multiplier_turn: 0, multiplier: 9)
+        post '/games/truco/respose', params: {
+          response: 'y',
+          round_id: round.id
+        }
+        message = { message: 'Ninguem pediu truco ainda nesse round!' }
+        expect(response).to have_http_status :bad_request
+        expect(response.body).to eql message.to_json
+      end
+
+      it 'when there is no round' do
+        post '/games/truco/respose', params: {
+          response: 'y',
+          round_id: round.id + 1
+        }
+        expect(response).to have_http_status :not_found
+      end
+
+      it 'when response is not y, n or r' do
+        round = create(:round, awaiting_confirmation: false, multiplier_turn: 0, multiplier: 9)
+        post '/games/truco/respose', params: {
+          response: 'e',
+          round_id: round.id
+        }
+        message = { message: 'A resposta tem que ser y, n ou r!' }
+        expect(response).to have_http_status :bad_request
+        expect(response.body).to eql message.to_json
+      end
+    end
+  end
 end
