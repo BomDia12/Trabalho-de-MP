@@ -12,8 +12,8 @@ export const RegisterContainer = styled.div`
 
 export const Box = styled.div`
     background-color: #ffffff;
-    width: 500px;
-    height: 600px;
+    width: 25rem;
+    height: 30rem;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -63,16 +63,9 @@ export const Box = styled.div`
             width: 1.5rem;
         }
     }
-
-    .button {
-        background-color: #2B4614;
-        color: #ffffff;
-        padding-top: 5rem;
-        width: 10rem;
-        height: 5rem;
-        border-radius: 10rem;
+    .login {
+        margin-top: 1rem;
     }
-
     .span-click {
         color: #2B4614;
         font-weight: 600;

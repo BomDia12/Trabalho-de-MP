@@ -43,8 +43,9 @@ const Register = () => {
                     id={"password_confirmation"} />
 
                 <Button label={"Entrar"}/>
-                <div>
-          <         span>Já possui conta?</span><span className="span-click"> Faça login</span>
+                
+                <div className="login">
+                    <span>Já possui conta?</span><span className="span-click"> Faça login</span>
                 </div>
 
                 <div className="bottom">
