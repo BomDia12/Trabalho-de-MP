@@ -4,7 +4,7 @@ import { RegisterContainer, Box } from "./styles"
 import PageName from '../../components/pageName'
 import Header from '../../components/header'
 import Input from '../../components/input'
-// import Button from "../../components/button"
+import Button from "../../components/button"
 import arrow from '../../assets/arrowBack/arrow.png'
 import naipe2 from '../../assets/naipes/naipe2.png'
 
@@ -17,8 +17,10 @@ const Register = () => {
                 title= "Cadastro"
             />
             <Box> 
-                <span>{7}</span>
-                <img className="top-card" src={naipe2} alt="Naipe da carta"/>
+                <div className="top">
+                    <span>{7}</span>
+                    <img className="top-card" src={naipe2} alt="Naipe da carta"/>
+                </div>
                 <Input 
                     label={"Nome"} 
                     name={"username"} 
@@ -40,9 +42,7 @@ const Register = () => {
                     type={"password"}
                     id={"password_confirmation"} />
 
-                {/* <Button/> */}
-                <input class="button" type="button" id="login" value="entrar"/>
-
+                <Button label={"Entrar"}/>
                 <div>
           <         span>Já possui conta?</span><span className="span-click"> Faça login</span>
                 </div>
