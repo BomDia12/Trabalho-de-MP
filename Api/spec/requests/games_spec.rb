@@ -778,4 +778,63 @@ RSpec.describe 'Games', type: :request do
       end
     end
   end
+
+  describe 'POST give up' do
+    let(:game) { create(:game) }
+    context 'valid params' do
+      context 'player is even' do
+        before do
+          post '/games/give_up', params: {
+            player: 0,
+            game_id: game.id
+          }
+        end
+
+        it 'should return ok' do
+          expect(response).to have_http_status :ok
+        end
+
+        it 'should update game' do
+          expect(Game.find(game.id).point_b).to eql 12
+        end
+      end
+
+      context 'player is odd' do
+        before do
+          post '/games/give_up', params: {
+            player: 1,
+            game_id: game.id
+          }
+        end
+
+        it 'should return ok' do
+          expect(response).to have_http_status :ok
+        end
+
+        it 'should update game' do
+          expect(Game.find(game.id).point_a).to eql 12
+        end
+      end
+    end
+
+    context 'invalid params' do
+      it "player isn't in 0..3" do
+        post '/games/give_up', params: {
+          player: 4,
+          game_id: game.id
+        }
+        expect(response).to have_http_status :bad_request
+        message = { message: 'O jogador tem que estar entre 0 e 3!' }
+        expect(response.body).to eql message.to_json
+      end
+
+      it "game doesn't exist" do
+        post '/games/give_up', params: {
+          player: 0,
+          game_id: game.id + 1
+        }
+        expect(response).to have_http_status :not_found
+      end
+    end
+  end
 end

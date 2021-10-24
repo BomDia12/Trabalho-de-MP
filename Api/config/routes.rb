@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       post 'ask', to: 'games#ask_truco'
       post 'response', to: 'games#truco_response'
     end
+    post 'give_up', to: 'games#give_up'
   end
 
   get 'authentication_failure',

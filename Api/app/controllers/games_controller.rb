@@ -86,6 +86,10 @@ class GamesController < ApplicationController
     render json: { message: e.message }, status: :not_found
   end
 
+  def give_up
+    head 500
+  end
+
   private
 
   def create_players(users, game_id)
