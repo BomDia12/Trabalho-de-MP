@@ -1,14 +1,17 @@
 import { Container } from "./styles";
 import { api } from "../../services/api";
 import { useHistory } from "react-router-dom";
+import { useUserContext } from "../../../context/user";
 
 const InitGame = () => {
+  const { user } = useUserContext;
   const history = useHistory();
+
   const StartGame = (e) => {
     e.preventDefault();
     api
       .post("games/new", {
-        users: [],
+        users: [user ? user.id : ""],
       })
       .then((response) => {
         response.status === 201
