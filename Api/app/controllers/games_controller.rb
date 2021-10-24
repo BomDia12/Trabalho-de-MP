@@ -87,7 +87,21 @@ class GamesController < ApplicationController
   end
 
   def give_up
-    head 500
+    game = Game.find params[:game_id]
+    response = invalid_give_up(params[:player])
+
+    return render json: response if response
+
+    if params[:player].to_i.even?
+      game.update!(point_b: 12)
+    else
+      game.update!(point_a: 12)
+    end
+
+    check_end_game game
+    render json: game
+  rescue StandardError => e
+    render json: { message: e.message }, status: :not_found
   end
 
   private
@@ -330,5 +344,11 @@ class GamesController < ApplicationController
   def next_multiplier(multiplier)
     table = { 1 => 3, 3 => 6, 6 => 9, 9 => 12 }
     table[multiplier]
+  end
+
+  def invalid_give_up(player)
+    return { message: 'O jogador tem que estar entre 0 e 3!' } unless (0..3).include? player.to_i
+
+    false
   end
 end

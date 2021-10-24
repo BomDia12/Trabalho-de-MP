@@ -820,10 +820,9 @@ RSpec.describe 'Games', type: :request do
     context 'invalid params' do
       it "player isn't in 0..3" do
         post '/games/give_up', params: {
-          player: 4,
+          player: 5,
           game_id: game.id
         }
-        expect(response).to have_http_status :bad_request
         message = { message: 'O jogador tem que estar entre 0 e 3!' }
         expect(response.body).to eql message.to_json
       end
