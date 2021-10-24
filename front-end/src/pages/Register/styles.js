@@ -21,6 +21,17 @@ export const Box = styled.div`
     flex-direction: column;
     border-radius: 8px;
 
+    .top {
+        align-self: flex-start;
+        margin-left: 1em;
+        padding-top: 1em;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        
+    }
+
     .top-card {
             display: flex;
             flex-direction: column;
@@ -31,29 +42,37 @@ export const Box = styled.div`
                 width: 1.5rem;
             }
         }
+    
+    .bottom {
+        align-self: flex-end;
+        margin-right: 1em;
+        padding-bottom: 1em;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+    }
 
     .bottom-card {
         display: flex;
+        flex-direction: column;
         justify-content: flex-end;
-        
-        .div-naipe {
-            bottom: 0;
-            display: flex;
-            gap: 10px;
-            flex-direction: column;
-        }
+        gap: 10px;
 
         img {
             width: 1.5rem;
         }
     }
+
     .button {
         background-color: #2B4614;
         color: #ffffff;
-        width: 5rem;
-        height: 2rem;
-        border-radius: 30px;
+        padding-top: 5rem;
+        width: 10rem;
+        height: 5rem;
+        border-radius: 10rem;
     }
+
     .span-click {
         color: #2B4614;
         font-weight: 600;

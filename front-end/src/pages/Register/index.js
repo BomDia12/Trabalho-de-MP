@@ -47,10 +47,10 @@ const Register = () => {
           <         span>Já possui conta?</span><span className="span-click"> Faça login</span>
                 </div>
 
-                <div className="div-naipe">
+                <div className="bottom">
                     <img className="botton-card" src={naipe2} alt="Naipe da carta"/>
+                    <span>{7}</span>
                 </div>
-                <span>{7}</span>
 
             </Box> 
         </RegisterContainer>
