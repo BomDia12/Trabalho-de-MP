@@ -19,7 +19,7 @@ export const Box = styled.div`
     align-items: center;
     align-self: center;
     flex-direction: column;
-    border-radius: 8px;
+    border-radius: 1rem;
     margin-top: 1rem;
 
     .top {
@@ -36,7 +36,7 @@ export const Box = styled.div`
     .top-card {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 1rem;
             justify-content: flex-start;
 
             img {
@@ -58,7 +58,7 @@ export const Box = styled.div`
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        gap: 10px;
+        gap: 1rem;
 
         img {
             width: 1.5rem;

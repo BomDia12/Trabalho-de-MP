@@ -5,14 +5,11 @@ import styled from 'styled-components';
 export const Container = styled.div`
     background-color: #2B4614;
     height: 4rem;
-    width: 35rem;
+    width: 45%;
     display: flex;
-    /* /* align-items: center; */
-    /* width: 50%; */
-    /* height: 100%; */
     justify-content: flex-start;
     align-self: left;
-    margin-top: 30px;
+    margin-top: 1rem;
     align-items: center;
 `;
 
