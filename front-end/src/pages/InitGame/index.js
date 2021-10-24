@@ -1,7 +1,7 @@
 import { Container } from "./styles";
 import { api } from "../../services/api";
 import { useHistory } from "react-router-dom";
-import { useUserContext } from "../../../context/user";
+import { useUserContext } from "../../context/user";
 
 const InitGame = () => {
   const { user } = useUserContext;
