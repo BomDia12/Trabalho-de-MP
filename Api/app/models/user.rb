@@ -12,4 +12,5 @@ class User < ApplicationRecord
   validates_length_of :name, minimum: 3
 
   has_many :user_games
+  has_many :games, through: :user_games
 end

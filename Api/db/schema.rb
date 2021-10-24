@@ -54,17 +54,18 @@ ActiveRecord::Schema.define(version: 2021_10_13_142942) do
     t.index ["round_id"], name: "index_hands_on_round_id"
   end
 
-  create_table "rounds", force: :cascade do |t|
-    t.bigint "game_id", null: false
-    t.integer "points_a"
-    t.integer "points_b"
-    t.integer "multiplier"
-    t.integer "multiplier_turn"
-    t.integer "turn"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.boolean "ended"
-    t.index ["game_id"], name: "index_rounds_on_game_id"
+  create_table 'rounds', force: :cascade do |t|
+    t.bigint 'game_id', null: false
+    t.integer 'points_a'
+    t.integer 'points_b'
+    t.integer 'multiplier'
+    t.integer 'multiplier_turn'
+    t.integer 'turn'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.boolean 'ended'
+    t.boolean 'awaiting_confirmation'
+    t.index ['game_id'], name: 'index_rounds_on_game_id'
   end
 
   create_table "tables", force: :cascade do |t|
@@ -78,13 +79,15 @@ ActiveRecord::Schema.define(version: 2021_10_13_142942) do
     t.index ["round_id"], name: "index_tables_on_round_id"
   end
 
-  create_table "user_games", force: :cascade do |t|
-    t.boolean "winner"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "player"
-    t.index ["user_id"], name: "index_user_games_on_user_id"
+  create_table 'user_games', force: :cascade do |t|
+    t.boolean 'winner'
+    t.bigint 'user_id', null: false
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.integer 'player'
+    t.bigint 'game_id', null: false
+    t.index ['game_id'], name: 'index_user_games_on_game_id'
+    t.index ['user_id'], name: 'index_user_games_on_user_id'
   end
 
   create_table "users", force: :cascade do |t|
@@ -102,9 +105,10 @@ ActiveRecord::Schema.define(version: 2021_10_13_142942) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "hands", "rounds"
-  add_foreign_key "rounds", "games"
-  add_foreign_key "tables", "rounds"
-  add_foreign_key "user_games", "users"
+  add_foreign_key 'active_storage_attachments', 'active_storage_blobs', column: 'blob_id'
+  add_foreign_key 'hands', 'rounds'
+  add_foreign_key 'rounds', 'games'
+  add_foreign_key 'tables', 'rounds'
+  add_foreign_key 'user_games', 'games'
+  add_foreign_key 'user_games', 'users'
 end
