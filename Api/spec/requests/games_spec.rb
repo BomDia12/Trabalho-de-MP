@@ -627,7 +627,7 @@ RSpec.describe 'Games', type: :request do
           round_id: round.id
         }
         expect(response).to have_http_status :bad_request
-        expect(response.body).to eql "{\"message\":\"O jogador tem que estar entre 0 e 3\"}"
+        expect(response.body).to eql '{"message":"O jogador tem que estar entre 0 e 3"}'
       end
 
       it 'player has asked for the last multiplier' do
@@ -658,7 +658,7 @@ RSpec.describe 'Games', type: :request do
     context 'valid params' do
       context 'Yes response' do
         before do
-          post '/games/truco/respose', params: {
+          post '/games/truco/response', params: {
             response: 'y',
             round_id: round.id
           }
@@ -676,7 +676,7 @@ RSpec.describe 'Games', type: :request do
 
       context 'negative response' do
         before do
-          post '/games/truco/respose', params: {
+          post '/games/truco/response', params: {
             response: 'n',
             round_id: round.id
           }
@@ -699,7 +699,7 @@ RSpec.describe 'Games', type: :request do
 
       context 'raise response' do
         before do
-          post '/games/truco/respose', params: {
+          post '/games/truco/response', params: {
             response: 'r',
             round_id: round.id
           }
@@ -720,7 +720,7 @@ RSpec.describe 'Games', type: :request do
     context "check when multiplier isn't 1" do
       it 'when multiplier is 3' do
         round = create(:round, awaiting_confirmation: true, multiplier_turn: 0, multiplier: 3)
-        post '/games/truco/respose', params: {
+        post '/games/truco/response', params: {
           response: 'y',
           round_id: round.id
         }
@@ -729,7 +729,7 @@ RSpec.describe 'Games', type: :request do
 
       it 'when multiplier is 6' do
         round = create(:round, awaiting_confirmation: true, multiplier_turn: 0, multiplier: 6)
-        post '/games/truco/respose', params: {
+        post '/games/truco/response', params: {
           response: 'y',
           round_id: round.id
         }
@@ -738,7 +738,7 @@ RSpec.describe 'Games', type: :request do
 
       it 'when multiplier is 9' do
         round = create(:round, awaiting_confirmation: true, multiplier_turn: 0, multiplier: 9)
-        post '/games/truco/respose', params: {
+        post '/games/truco/response', params: {
           response: 'y',
           round_id: round.id
         }
@@ -749,7 +749,7 @@ RSpec.describe 'Games', type: :request do
     context 'invalid params' do
       it 'when is not awaiting confirmation' do
         round = create(:round, awaiting_confirmation: false, multiplier_turn: 0, multiplier: 9)
-        post '/games/truco/respose', params: {
+        post '/games/truco/response', params: {
           response: 'y',
           round_id: round.id
         }
@@ -759,7 +759,7 @@ RSpec.describe 'Games', type: :request do
       end
 
       it 'when there is no round' do
-        post '/games/truco/respose', params: {
+        post '/games/truco/response', params: {
           response: 'y',
           round_id: round.id + 1
         }
@@ -768,7 +768,7 @@ RSpec.describe 'Games', type: :request do
 
       it 'when response is not y, n or r' do
         round = create(:round, awaiting_confirmation: false, multiplier_turn: 0, multiplier: 9)
-        post '/games/truco/respose', params: {
+        post '/games/truco/response', params: {
           response: 'e',
           round_id: round.id
         }

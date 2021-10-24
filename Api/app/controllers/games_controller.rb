@@ -75,7 +75,15 @@ class GamesController < ApplicationController
   end
 
   def truco_response
-    head 500
+    round = Round.find(params[:round_id])
+    response = invalid_response(round, params[:response])
+
+    return render json: response, status: :bad_request if response
+
+    check_response(round, params[:response])
+    render json: Round.find(round.id)
+  rescue StandardError => e
+    render json: { message: e.message }, status: :not_found
   end
 
   private
@@ -273,12 +281,50 @@ class GamesController < ApplicationController
   def invalid_ask(round, player)
     return { message: 'O jogador tem que estar entre 0 e 3' } unless (0..3).include? player.to_i
 
-    if round.multiplier_turn
-      if round.multiplier_turn.even? == player.to_i.even?
-        return { message: 'Você ou o seu parceiro pediram truco pela última vez' }
-      end
+    if round.multiplier_turn && (round.multiplier_turn.even? == player.to_i.even?)
+      return { message: 'Você ou o seu parceiro pediram truco pela última vez' }
     end
 
     false
+  end
+
+  def invalid_response(round, response)
+    valid_responses = %w[y n r]
+    return { message: 'A resposta tem que ser y, n ou r!' } unless valid_responses.include? response
+
+    return { message: 'Ninguem pediu truco ainda nesse round!' } unless round.awaiting_confirmation
+
+    false
+  end
+
+  def check_response(round, response)
+    multiplier = next_multiplier(round.multiplier)
+    case response
+    when 'y'
+      round.update!(multiplier: multiplier,
+                    awaiting_confirmation: false)
+    when 'n'
+      if round.multiplier_turn.even?
+        round.update!(awaiting_confirmation: false, points_a: 2)
+      else
+        round.update!(awaiting_confirmation: false, points_b: 2)
+      end
+      finish_round(round)
+    when 'r'
+      if round.multiplier_turn.even?
+        round.update!(multiplier: multiplier,
+                      awaiting_confirmation: true,
+                      multiplier_turn: 1)
+      else
+        round.update!(multiplier: multiplier,
+                      awaiting_confirmation: true,
+                      multiplier_turn: 0)
+      end
+    end
+  end
+
+  def next_multiplier(multiplier)
+    table = { 1 => 3, 3 => 6, 6 => 9, 9 => 12 }
+    table[multiplier]
   end
 end
