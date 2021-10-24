@@ -13,7 +13,8 @@ const InitGame = () => {
       response.status === 201
         ? alert("criado com sucesso")
         : alert("erro, tente novamente");
-      history.push("/game");
+      console.log(response.data)
+      history.push(`/game/${response.data.id}/0`);
     });
   };
   return (

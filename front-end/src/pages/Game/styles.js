@@ -48,6 +48,10 @@ export const BottomPlayer = styled.div`
   position: absolute;
   bottom: 10px;
   display: flex;
+  a {
+    margin: 5px;
+    cursor: pointer;
+  }
 `;
 
 export const LeftPlayer = styled.div`
