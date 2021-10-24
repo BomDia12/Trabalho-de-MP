@@ -13,8 +13,12 @@ import Card from '../../components/cards'
 import naipe1 from '../../assets/naipes/naipe1.png'
 import naipe2 from '../../assets/naipes/naipe2.png'
 import naipe3 from '../../assets/naipes/naipe3.png'
+import { useUserContext } from '../../context/user'
 
 const UserProfile = () => {
+
+    const { user } = useUserContext
+
     return (
         <ContainerPrincipal>
             <ContainerBoxPerfil>
@@ -57,19 +61,19 @@ const UserProfile = () => {
                             imgNaipeCard={naipe1}
                             numberCard={4}
                             titleCard="Partidas Jogadas"
-                            gameVariable="50"
+                            gameVariable={user && user.user_games.lenght}
                         />
                         <Card
                             imgNaipeCard={naipe2}
                             numberCard={7}
                             titleCard="Porcentagem de Vitorias"
-                            gameVariable="50.00%"
+                            gameVariable={`${user && user.user_games.filter(game => game.winner).lenght / user.user_games.lenght}`}
                         />
                         <Card
                             imgNaipeCard={naipe3}
                             numberCard={4}
                             titleCard="Total de trucos pedidos"
-                            gameVariable="50"
+                            gameVariable={user && user.user_games.filter(game => !game.winner).lenght
                         />
                     </ThirdContainer>
                 </div>
