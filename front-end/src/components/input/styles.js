@@ -14,7 +14,7 @@ export const Container = styled.div`
     input {
         font-size: 14px;
         width: 100%;
-        height: 3em;    /* altura eh 3 vezes maior que a fonte do input */
+        height: 4em;    /* altura eh 3 vezes maior que a fonte do input */
         text-indent: 10px;
     }
     
