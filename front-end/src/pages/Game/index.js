@@ -7,8 +7,12 @@ import {
   TopPlayer,
 } from "./styles";
 import CardBack from "../../components/GameCardBack";
+import { useParams } from "react-router";
 
 const Game = () => {
+
+    const { player, game_id } = useParams()
+
   return (
     <Container>
       <Table>Truco</Table>
