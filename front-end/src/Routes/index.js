@@ -4,6 +4,7 @@ import HomePage from '../pages/HomePage'
 import UserProfile from '../pages/UserProfile'
 import Rules from '../pages/GameRules'
 import Game from '../pages/Game'
+import InitGame from '../pages/InitGame'
 
 const Routes = () => {
   return (
@@ -12,6 +13,7 @@ const Routes = () => {
       <Route exact path='/rules' component={Rules} />
       <Route path='/user_perfil' component={UserProfile} />
       <Route path='/game' component={Game} />
+      <Route path='/game_start' component={InitGame} />
     </Switch>
   )
 }
