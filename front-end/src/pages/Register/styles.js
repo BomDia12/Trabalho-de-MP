@@ -64,7 +64,7 @@ export const Box = styled.div`
             width: 1.5rem;
         }
     }
-    .login {
+    .register {
         margin-top: 1rem;
     }
     .span-click {

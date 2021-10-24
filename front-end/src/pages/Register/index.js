@@ -43,10 +43,10 @@ const Register = () => {
                     id={"password_confirmation"} />
 
                 <Button 
-                    label={"Entrar"}
-                    id={"login"}/>
+                    label={"Cadastrar"}
+                    id={"register"}/>
                 
-                <div className="login">
+                <div className="register">
                     <span>Já possui conta?</span><span className="span-click"> Faça login</span>
                 </div>
 
