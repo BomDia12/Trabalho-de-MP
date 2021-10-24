@@ -13,12 +13,8 @@ import Card from '../../components/cards'
 import naipe1 from '../../assets/naipes/naipe1.png'
 import naipe2 from '../../assets/naipes/naipe2.png'
 import naipe3 from '../../assets/naipes/naipe3.png'
-import { useUserContext } from '../../context/user'
 
 const UserProfile = () => {
-
-    const { user } = useUserContext()
-
     return (
         <ContainerPrincipal>
             <ContainerBoxPerfil>
@@ -33,12 +29,17 @@ const UserProfile = () => {
                     <FormContainer>
                         <div className="wrapper-form-container">
                             <div className="txt_field">
-                                <label>Email: {user && user.email}</label>
+                                <label>Email</label>
                             </div>
                             <div className="div-line-botton"></div>
                             <div className="txt_field">
-                                <label>Nome: {user && user.name}</label>
+                                <label>Nome</label>
                                 <input style={{backgroundColor: '#BA1200'}} type="button" value="Alterar Nome"/>
+                            </div>
+                            <div className="div-line-botton"></div>
+                            <div className="txt_field">
+                                <label>Senha</label>
+                                <input style={{backgroundColor: '#2B4614'}} type="button" value="Alterar Senha"/>
                             </div>
                             <div className="div-line-botton"></div>
                         </div>
@@ -56,19 +57,19 @@ const UserProfile = () => {
                             imgNaipeCard={naipe1}
                             numberCard={4}
                             titleCard="Partidas Jogadas"
-                            gameVariable={user && user.user_games.lenght}
+                            gameVariable="50"
                         />
                         <Card
                             imgNaipeCard={naipe2}
                             numberCard={7}
                             titleCard="Porcentagem de Vitorias"
-                            gameVariable={`${user && user.user_games.filter(game => game.winner).lenght / user.user_games.lenght}`}
+                            gameVariable="50.00%"
                         />
                         <Card
                             imgNaipeCard={naipe3}
                             numberCard={4}
                             titleCard="Total de trucos pedidos"
-                            gameVariable={user && user.user_games.filter(game => !game.winner).lenght}
+                            gameVariable="50"
                         />
                     </ThirdContainer>
                 </div>
