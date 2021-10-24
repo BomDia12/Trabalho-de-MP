@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
     background-color: #2B4614;
-    height: 101px;
-    width: 703px;
+    height: 4rem;
+    width: 35rem;
     display: flex;
     /* /* align-items: center; */
     /* width: 50%; */
@@ -13,6 +13,7 @@ export const Container = styled.div`
     justify-content: flex-start;
     align-self: left;
     margin-top: 30px;
+    align-items: center;
 `;
 
 export const Title = styled.h1`
@@ -20,7 +21,6 @@ export const Title = styled.h1`
     color: #ffffff;
     font-style: normal;
     font-weight: normal;
-    font-size: 64px;
-    line-height: 86px;
-    margin-left: 4rem;
+    font-size: 3rem;
+    margin-left: 2rem;
 `;

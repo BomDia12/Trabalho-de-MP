@@ -20,6 +20,7 @@ export const Box = styled.div`
     align-self: center;
     flex-direction: column;
     border-radius: 8px;
+    margin-top: 1rem;
 
     .top {
         align-self: flex-start;
