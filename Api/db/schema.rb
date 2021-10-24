@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_211_013_142_942) do
+ActiveRecord::Schema.define(version: 20_211_023_184_710) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20_211_013_142_942) do
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
     t.boolean 'ended'
+    t.boolean 'awaiting_confirmation'
     t.index ['game_id'], name: 'index_rounds_on_game_id'
   end
 
@@ -84,6 +85,8 @@ ActiveRecord::Schema.define(version: 20_211_013_142_942) do
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
     t.integer 'player'
+    t.bigint 'game_id', null: false
+    t.index ['game_id'], name: 'index_user_games_on_game_id'
     t.index ['user_id'], name: 'index_user_games_on_user_id'
   end
 
@@ -106,5 +109,6 @@ ActiveRecord::Schema.define(version: 20_211_013_142_942) do
   add_foreign_key 'hands', 'rounds'
   add_foreign_key 'rounds', 'games'
   add_foreign_key 'tables', 'rounds'
+  add_foreign_key 'user_games', 'games'
   add_foreign_key 'user_games', 'users'
 end
