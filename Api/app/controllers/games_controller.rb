@@ -62,7 +62,16 @@ class GamesController < ApplicationController
   end
 
   def ask_truco
-    head 500
+    round = Round.find(params[:round_id])
+    player = params[:player]
+    response = invalid_ask(round, player)
+
+    return render json: response, status: :bad_request if response
+
+    round.update!(awaiting_confirmation: true, multiplier_turn: player)
+    render json: round, status: :ok
+  rescue StandardError => e
+    render json: { message: e.message }, status: :not_found
   end
 
   def truco_response
@@ -259,5 +268,17 @@ class GamesController < ApplicationController
         user_game.update!(winner: false)
       end
     end
+  end
+
+  def invalid_ask(round, player)
+    return { message: 'O jogador tem que estar entre 0 e 3' } unless (0..3).include? player.to_i
+
+    if round.multiplier_turn
+      if round.multiplier_turn.even? == player.to_i.even?
+        return { message: 'Você ou o seu parceiro pediram truco pela última vez' }
+      end
+    end
+
+    false
   end
 end

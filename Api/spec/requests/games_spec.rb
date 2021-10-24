@@ -626,29 +626,29 @@ RSpec.describe 'Games', type: :request do
           player: 4,
           round_id: round.id
         }
-        message = { message: 'O jogador tem que estar entre 0 e 3' }
         expect(response).to have_http_status :bad_request
-        expect(response.body).to eql message.to_s
+        expect(response.body).to eql "{\"message\":\"O jogador tem que estar entre 0 e 3\"}"
       end
 
       it 'player has asked for the last multiplier' do
+        round = create(:round, multiplier_turn: 0)
         post '/games/truco/ask', params: {
           player: 0,
-          round_id: create(:round, multiplier_turn: 0)
+          round_id: round.id
         }
         message = { message: 'Você ou o seu parceiro pediram truco pela última vez' }
+        expect(response.body).to eql message.to_json
         expect(response).to have_http_status :bad_request
-        expect(response.body).to eql message.to_s
       end
 
       it "player's partner has asked for the last multiplier" do
         post '/games/truco/ask', params: {
           player: 1,
-          round_id: create(:round, multiplier_turn: 3)
+          round_id: create(:round, multiplier_turn: 3).id
         }
         message = { message: 'Você ou o seu parceiro pediram truco pela última vez' }
         expect(response).to have_http_status :bad_request
-        expect(response.body).to eql message.to_s
+        expect(response.body).to eql message.to_json
       end
     end
   end
