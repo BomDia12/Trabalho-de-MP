@@ -28,4 +28,6 @@ Rails.application.routes.draw do
   get 'authentication_failure',
       to: 'application#authentication_failure',
       as: :authentication_failure
+  
+  mount ActionCable.server => '/cable'
 end
