@@ -17,11 +17,11 @@ const HomePage = () => {
   const { user } = useUserContext;
   const history = useHistory();
 
-  const StartGame = (e) => {
-    e.preventDefault();
+  const StartGame = () => {
+      console.log('oi')
     api
-      .post("games/new", {
-        users: [user ? user.id : ""],
+      .post("/games/new", {
+        users: [user ? user.id : null],
       })
       .then((response) => {
         response.status === 201
@@ -29,6 +29,7 @@ const HomePage = () => {
           : alert("Erro, tente novamente");
         history.push(`/game/${response.data.id}/0`);
       });
+      console.log('oi')
   };
   return (
     <>

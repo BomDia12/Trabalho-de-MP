@@ -1,8 +1,8 @@
 import { ButtonContainer } from './styled'
 
-const Button = (props) => {
+const Button = ({ children, ...props }) => {
     return (
-        <ButtonContainer> {props.children} </ButtonContainer>
+        <ButtonContainer {...props}> {children} </ButtonContainer>
     );
 }
 
