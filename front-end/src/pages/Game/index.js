@@ -19,6 +19,7 @@ const Game = () => {
 
   const [ round, setRound ] = useState({});
   const [game, setGame] = useState({})
+  const [table, setTable] = useState({})
 
   const { player, game_id } = useParams()
 
@@ -35,6 +36,7 @@ const Game = () => {
   const loadHand = async () => {
     const response = await api.get(`games/${game_id}`)
     const response2 = await api.get(`games/round/${response.data.rounds[response.data.rounds.length - 1].id}`)
+    setTable(response2.data.tables[response2.data.tables.length - 1])
     setHand(response2.data.hands.filter(hand => hand.player == player)[response2.data.hands.filter(hand => hand.player == player).length - 1])
   }
 
@@ -60,7 +62,24 @@ const Game = () => {
 
   return (
     <Container>
-      <Table>Truco</Table>
+      <Table>
+          {table &&
+                table.card_a &&
+                    <div>{table.card_a}</div>
+          }
+          {table &&
+                table.card_b &&
+                    <div>{table.card_b}</div>
+          }
+          {table &&
+                table.card_c &&
+                    <div>{table.card_c}</div>
+          }
+          {table &&
+                table.card_d &&
+                    <div>{table.card_d}</div>
+          }
+      </Table>
     
         <YourPoints>
             <span>Seus pontos</span>
