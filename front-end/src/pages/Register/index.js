@@ -5,7 +5,7 @@ import { RegisterContainer, Box } from "./styles"
 import PageName from '../../components/pageName'
 import Header from '../../components/header'
 import Input from '../../components/input'
-import Button from "../../components/button"
+import Button from "../../components/FormButton"
 import arrow from '../../assets/arrowBack/arrow.png'
 import naipe2 from '../../assets/naipes/naipe2.png'
 import { useUserContext } from "../../context/user"
