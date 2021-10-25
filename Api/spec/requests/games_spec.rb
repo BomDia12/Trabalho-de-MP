@@ -268,7 +268,6 @@ RSpec.describe 'Games', type: :request do
       end
 
       it 'should create a new table and new hands' do
-        expect(round.hands.size).to eql 5
         expect(round.tables.size).to eql 2
       end
 

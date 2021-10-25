@@ -231,7 +231,6 @@ class GamesController < ApplicationController
       false
     else
       create_table(round.id)
-      create_hands(round.id)
     end
   end
 
