@@ -1,10 +1,14 @@
 import {
   BottomPlayer,
   Container,
+  YourPoints,
   LeftPlayer,
   RightPlayer,
+  EnemyPoints,
   Table,
   TopPlayer,
+  YourRound,
+  EnemyRound
 } from "./styles";
 import CardBack from "../../components/GameCardBack";
 import { useParams } from "react-router";
@@ -13,35 +17,55 @@ import { useState, useEffect } from 'react'
 
 const Game = () => {
 
-  const [ round, setRound ] = useState([]);
+  const [ round, setRound ] = useState({});
+  const [game, setGame] = useState({})
 
   const { player, game_id } = useParams()
 
   const getRound = async () => {
     const response = await api.get(`/games/${game_id}`)
 
-    setRound(response.data.rounds.filter(round => !round.ended))
+    setGame(response.data)
+    setRound(response.data.rounds.filter(round => !round.ended)[0])
     
   }
   
   useEffect(() => {
     getRound();
   }, []);
-  
-  const showRound = (round) => {
-    let pointsA, pointsB;
-
-    for (let i = 0; i < round.length; i ++){
-      pointsA = round[i].points_a
-      pointsB = round[i].points_b
-    }
-
-    return `pontos A: ${pointsA}, pontos B: ${pointsB}`
-  }
 
   return (
     <Container>
-      <Table>Truco {showRound(round)}</Table>
+      <Table>Truco</Table>
+
+        <YourPoints>
+            <span>Seus pontos</span>
+            {game && 
+                +player % 2 == 0 ? game.point_a : game.point_b
+            }
+        </YourPoints>
+
+        <EnemyPoints>
+            <span>Pontos do seu inimigo</span>
+            {game && 
+                +player % 2 == 0 ? game.point_b : game.point_a
+            }
+        </EnemyPoints>
+
+        <YourRound>
+            <span>Seus pontos esse round</span>
+            {round && 
+                +player % 2 == 0 ? round.points_a : round.points_b
+            }
+        </YourRound>
+
+        <EnemyRound>
+            <span>Pontos do seu inimigo esse round</span>
+            {round && 
+                +player % 2 == 0 ? round.points_b : round.points_a
+            }
+        </EnemyRound>
+
       <TopPlayer>
         <CardBack />
         <CardBack />
