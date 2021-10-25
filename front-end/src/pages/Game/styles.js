@@ -48,6 +48,10 @@ export const BottomPlayer = styled.div`
   position: absolute;
   bottom: 10px;
   display: flex;
+  a {
+    margin: 5px;
+    cursor: pointer;
+  }
 `;
 
 export const LeftPlayer = styled.div`
@@ -55,4 +59,38 @@ export const LeftPlayer = styled.div`
   left: -50px;
   display: flex;
   transform: rotate(90deg);
+`;
+
+const PointShow = styled.div`
+    position: absolute;
+    height: 6rem;
+    width: 15rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: #fbb13c;
+    text-shadow: 0 0 5px #000;
+    flex-direction: column;
+    text-align: center;
+`;
+
+export const YourPoints = styled(PointShow)`
+    left: 5vw;
+    top: 5vh;
+`;
+
+export const EnemyPoints = styled(PointShow)`
+    right: 5vw;
+    top: 5vh;
+`;
+
+export const YourRound = styled(PointShow)`
+    left: 5vw;
+    bottom: 5vh;
+`;
+
+export const EnemyRound = styled(PointShow)`
+    right: 5vw;
+    bottom: 5vh;
 `;
