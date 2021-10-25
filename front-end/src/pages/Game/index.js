@@ -61,7 +61,7 @@ const Game = () => {
   return (
     <Container>
       <Table>Truco</Table>
-
+    
         <YourPoints>
             <span>Seus pontos</span>
             {game && 
