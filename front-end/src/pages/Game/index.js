@@ -1,23 +1,36 @@
 import {
   BottomPlayer,
   Container,
+  YourPoints,
   LeftPlayer,
   RightPlayer,
+  EnemyPoints,
   Table,
   TopPlayer,
+  YourRound,
+  EnemyRound
 } from "./styles";
 import CardBack from "../../components/GameCardBack";
 import { useParams } from "react-router";
-import { useEffect, useState } from "react";
 import { api } from "../../services/api";
+import { useState, useEffect } from 'react'
 
 const Game = () => {
 
-  let { player, game_id } = useParams()
+  const [ round, setRound ] = useState({});
+  const [game, setGame] = useState({})
 
-  console.log(player)
+  const { player, game_id } = useParams()
+
+  const getRound = async () => {
+    const response = await api.get(`/games/${game_id}`)
+
+    setGame(response.data)
+    setRound(response.data.rounds.filter(round => !round.ended)[0])
+    
+  }
   
-  const[hand, setHand] = useState()
+    const[hand, setHand] = useState()
 
   const loadHand = async () => {
     const response = await api.get(`games/${game_id}`)
@@ -39,14 +52,44 @@ const Game = () => {
     const response = await api.post("games/play", {hand_id: hand.id, card: 'c'})
     console.log(response.status)
   }
-
+  
   useEffect(() => {
-    loadHand()
-  }, [])
+    getRound();
+    loadHand();
+  }, []);
 
   return (
     <Container>
       <Table>Truco</Table>
+
+        <YourPoints>
+            <span>Seus pontos</span>
+            {game && 
+                +player % 2 == 0 ? game.point_a : game.point_b
+            }
+        </YourPoints>
+
+        <EnemyPoints>
+            <span>Pontos do seu inimigo</span>
+            {game && 
+                +player % 2 == 0 ? game.point_b : game.point_a
+            }
+        </EnemyPoints>
+
+        <YourRound>
+            <span>Seus pontos esse round</span>
+            {round && 
+                +player % 2 == 0 ? round.points_a : round.points_b
+            }
+        </YourRound>
+
+        <EnemyRound>
+            <span>Pontos do seu inimigo esse round</span>
+            {round && 
+                +player % 2 == 0 ? round.points_b : round.points_a
+            }
+        </EnemyRound>
+
       <TopPlayer>
         <CardBack />
         <CardBack />
