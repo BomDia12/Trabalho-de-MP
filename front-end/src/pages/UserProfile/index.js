@@ -73,7 +73,7 @@ const UserProfile = () => {
                             imgNaipeCard={naipe3}
                             numberCard={4}
                             titleCard="Total de trucos pedidos"
-                            gameVariable={user && user.user_games.filter(game => !game.winner).lenght
+                            gameVariable={user && user.user_games.filter(game => !game.winner).lenght}
                         />
                     </ThirdContainer>
                 </div>
