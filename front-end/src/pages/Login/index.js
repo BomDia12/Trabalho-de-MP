@@ -8,8 +8,23 @@ import Button from "../../components/button"
 import arrow from '../../assets/arrowBack/arrow.png'
 import naipe2 from '../../assets/naipes/naipe2.png'
 
+import axios from 'axios';
+import { useUserContext } from '../../context/user'
+import { useState } from "react"
+
+
+
 
 const Login = () => {
+
+    const { login } = useUserContext()
+    const [email,setEmail] = useState("");
+    const [password,setPassword] = useState("")
+    function handleLogin(e) {
+        e.preventDefault();
+        login(email,password);
+     }
+    
     return (
         <RegisterContainer>
             <Header icon={arrow}/>
@@ -21,14 +36,17 @@ const Login = () => {
                     <span>{7}</span>
                     <img className="top-card" src={naipe2} alt="Naipe da carta"/>
                 </div>
-                <div className="middleContainer">
+                <form onSubmit={handleLogin} className="middleContainer">
                     <div className="input">
                         <Input 
+                            onChange={event => setEmail(event.target.value)}
                             label={"Email"} 
                             name={"email"} 
                             type={"text"}
-                            id={"email"} />
+                            id={"email"} 
+                            />
                         <Input 
+                            onChange={event => setPassword(event.target.value)}
                             label={"Senha"} 
                             name={"passwprd"} 
                             type={"password"}
@@ -37,7 +55,8 @@ const Login = () => {
                     <div className="button">
                         <Button 
                             label={"Entrar"}
-                            id={"login"}/>
+                            id={"login"}
+                            type={"submit"}/>
                     </div>
                     <div className="cadastro">
                         <span className="span-click"> Esqueci minha senha</span>
@@ -46,7 +65,7 @@ const Login = () => {
                     <div className="cadastro">
                         <span>Não possui conta?</span><span className="span-click"> Crie sua conta</span>
                     </div>
-                </div>
+                </form>
                 <div className="bottom">
                     <img className="botton-card" src={naipe2} alt="Naipe da carta"/>
                     <span>{7}</span>
