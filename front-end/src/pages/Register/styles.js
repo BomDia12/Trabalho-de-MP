@@ -10,7 +10,7 @@ export const RegisterContainer = styled.div`
 
 `;
 
-export const Box = styled.div`
+export const Box = styled.form`
     background-color: #ffffff;
     width: 25rem;
     height: 30rem;
