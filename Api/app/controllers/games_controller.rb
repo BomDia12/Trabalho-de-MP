@@ -335,6 +335,21 @@ class GamesController < ApplicationController
     false
   end
 
+  # Função: invalid_response
+  # Descrição:
+  # Essa função recebe o round e a resposta
+  # e retorna uma mensagem de erro ou 
+  # caso ninguém tenha pedido truco
+  # Parâmetros:
+  # round: objeto Round
+  # response: string
+  # Assetivas de entrada:
+  # Response deve ser verificado se está incluso dentro
+  # de uma lista de respostas validas
+  # Assertiva de saída:
+  # É retornado uma resposta de erro caso a
+  # resposta não esteja inclusa na lista
+  # é retornado uma mensagem caso ninguém pediu truco
   def invalid_response(round, response)
     valid_responses = %w[y n r]
     return { message: 'A resposta tem que ser y, n ou r!' } unless valid_responses.include? response
