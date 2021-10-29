@@ -204,6 +204,18 @@ class GamesController < ApplicationController
   end
 
   # H5
+  # Função: distribute_cards
+  # Descrição:
+  # Essa função distribui um baralho de cartas
+  # construído pela função construct_deck
+  # e retorna as mãos.
+  # Parâmetros:
+  # Não há parâmetros.
+  # Assertivas de entrada:
+  # Não há entrada na função.
+  # Assertivas de saída:
+  # Retorna as mãos de todos os jogadores
+  # com base nas cartas do deck construído
   def distribute_cards
     deck = construct_deck.sample(28, random: Random.new(1))
     hands = [[], [], [], []]
