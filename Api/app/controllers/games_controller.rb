@@ -298,6 +298,19 @@ class GamesController < ApplicationController
     end
   end
 
+  # Função: check_round_winner
+  # Descrição:
+  # Essa função recebe um numero de identificação referente 
+  # ao vencedor da rodada e retorna mais 1 ponto ao vencedor.
+  # Parâmetros:
+  # winner: integer
+  # round: objeto Round
+  # Assetivas de entrada:
+  # winner tem que ser o número do jogador com a carta mais forte,
+  # round se refere à rodada atual, em que os 4 jogadores escolhem a carta.
+  # Assertiva de saída:
+  # Esta função não retorna nada, apenas adiciona 1 na 
+  # pontuação de round do time ganhador.
   def check_round_winner(winner, round)
     case winner
     when 1
@@ -341,6 +354,21 @@ class GamesController < ApplicationController
     end
   end
 
+  # Função: finish_round
+  # Descrição:
+  # Essa função verifica se o round do jogo chegou ao
+  # fim. Caso a pontuação da dupla A tenha chegado
+  # a 2 pontos, a pontuação do jogo da dupla A é adicionada.
+  # Caso contrário, a pontuação é adicionada à dupla B e o
+  # round é terminado e outro round é começado. Ainda é chamada
+  # a função de checar se o jogo foi terminado.
+  # Parâmetros:
+  # round: objeto Round
+  # Assertivas de entrada:
+  # A entrada deve ser um objeto Round válido.
+  # Assertivas de saída:
+  # A função não retorna nada, apenas termina o round e começa
+  # outro.
   def finish_round(round)
     game = round.game
     if round.points_a == 2
@@ -384,21 +412,6 @@ class GamesController < ApplicationController
     false
   end
 
-  # Função: invalid_response
-  # Descrição:
-  # Essa função recebe o round e a resposta
-  # e retorna uma mensagem de erro ou 
-  # caso ninguém tenha pedido truco
-  # Parâmetros:
-  # round: objeto Round
-  # response: string
-  # Assetivas de entrada:
-  # Response deve ser verificado se está incluso dentro
-  # de uma lista de respostas validas
-  # Assertiva de saída:
-  # É retornado uma resposta de erro caso a
-  # resposta não esteja inclusa na lista
-  # é retornado uma mensagem caso ninguém pediu truco
   def invalid_response(round, response)
     valid_responses = %w[y n r]
     return { message: 'A resposta tem que ser y, n ou r!' } unless valid_responses.include? response
