@@ -451,6 +451,19 @@ class GamesController < ApplicationController
     table[multiplier]
   end
 
+  # Função: invalid_give_up
+  # Descrição:
+  # Essa função recebe o player e faz uma
+  # verificação se ele está incluso dentro do
+  # intervalo
+  # Parâmetros:
+  # player: int
+  # Assetivas de entrada:
+  # É passado player para int para garantir e verificado 
+  # se ele está dentro do intervalo
+  # Assertiva de saída:
+  # É retornado uma mensagem de erro
+  # caso não esteja dentro do intervalo
   def invalid_give_up(player)
     return { message: 'O jogador tem que estar entre 0 e 3!' } unless (0..3).include? player.to_i
 
