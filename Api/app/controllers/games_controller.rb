@@ -42,6 +42,21 @@ class GamesController < ApplicationController
   end
 
   # H6
+  # Função: play
+  # Descrição:
+  # Essa função recebe a carta a ser jogada e faz
+  # todos os procedimentos referentes a isso. Se com
+  # essa jogada a mesa termina, uma nova mesa é criada
+  # e os jogadores recebem os pontos referentes a mesa,
+  # se, com o fim da mesa, a rodada também termina, a função
+  # tambem toma todas as providência referentes a isso,
+  # cria um novo round, muda a pontuação dos jogadores
+  # no jogo dependendo do truco, distribui novas cartas etc.
+  # Se, com o fim da rodada, o jogo tambem termine, a
+  # função atualiza os usuários com o estado deles em
+  # relação ao jogo que foi jogado.
+  # Parâmetros:
+  # hand_id
   def play
     hand = Hand.find(params[:hand_id])
     round = hand.round
@@ -246,6 +261,21 @@ class GamesController < ApplicationController
     end
   end
 
+  # Função: check_stronger_card
+  # Descrição:
+  # Essa função recebe duas cartas e retorna a mais forte
+  # entre as duas para o truco
+  # Parâmetros:
+  # card_1: string
+  # card_2: string
+  # Assetivas de entrada:
+  # card_1 e card_2 tem que ser formatada como uma carta,
+  # com o naipe (simbolo do naipe em unicode) separado por
+  # um espaço do número (ou letra) da carta
+  # Assertiva de saída:
+  # 1 -> card_1 > card_2
+  # 2 -> card_1 < card_2
+  # 3 -> card_1 == card_2
   def check_stronger_card(card_1, card_2)
     manilhas = ['♣ 4', '♥ 7', '♠ A', '♦ 7']
     manilhas.each do |manilha|
