@@ -237,6 +237,23 @@ class GamesController < ApplicationController
   end
 
   # H6
+  # Função: insert card into table
+  # Descrição:
+  # Essa função recebe uma carta, uma mesa e o turno
+  # e coloca a carta no objeto mesa dependendo do turno
+  # Parâmetros:
+  # card: string
+  # turn: integer
+  # table: objeto Table
+  # Assertivas de entrada:
+  # card -> tem que ser formatada como uma carta,
+  # com o naipe (simbolo do naipe em unicode) separado por
+  # um espaço do número (ou letra) da carta
+  # turn -> tem que estar no intervalo 0..3
+  # table -> tem que ser um objeto Table válido
+  # Assertivas de saída:
+  # Essa função não retorna nada, apenas modifica o objeto
+  # table
   def insert_card_into_table(card, turn, table)
     case turn
     when 0
