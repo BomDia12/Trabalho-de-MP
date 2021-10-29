@@ -204,18 +204,6 @@ class GamesController < ApplicationController
   end
 
   # H5
-  # Função: distribute_cards
-  # Descrição:
-  # Essa função distribui um baralho de cartas
-  # construído pela função construct_deck
-  # e retorna as mãos.
-  # Parâmetros:
-  # Não há parâmetros.
-  # Assertivas de entrada:
-  # Não há entrada na função.
-  # Assertivas de saída:
-  # Retorna as mãos de todos os jogadores
-  # com base nas cartas do deck construído
   def distribute_cards
     deck = construct_deck.sample(28, random: Random.new(1))
     hands = [[], [], [], []]
@@ -353,6 +341,21 @@ class GamesController < ApplicationController
     end
   end
 
+  # Função: finish_round
+  # Descrição:
+  # Essa função verifica se o round do jogo chegou ao
+  # fim. Caso a pontuação da dupla A tenha chegado
+  # a 2 pontos, a pontuação do jogo da dupla A é adicionada.
+  # Caso contrário, a pontuação é adicionada à dupla B e o
+  # round é terminado e outro round é começado. Ainda é chamada
+  # a função de checar se o jogo foi terminado.
+  # Parâmetros:
+  # round: objeto Round
+  # Assertivas de entrada:
+  # A entrada deve ser um objeto Round válido.
+  # Assertivas de saída:
+  # A função não retorna nada, apenas termina o round e começa
+  # outro.
   def finish_round(round)
     game = round.game
     if round.points_a == 2
@@ -396,21 +399,6 @@ class GamesController < ApplicationController
     false
   end
 
-  # Função: invalid_response
-  # Descrição:
-  # Essa função recebe o round e a resposta
-  # e retorna uma mensagem de erro ou 
-  # caso ninguém tenha pedido truco
-  # Parâmetros:
-  # round: objeto Round
-  # response: string
-  # Assetivas de entrada:
-  # Response deve ser verificado se está incluso dentro
-  # de uma lista de respostas validas
-  # Assertiva de saída:
-  # É retornado uma resposta de erro caso a
-  # resposta não esteja inclusa na lista
-  # é retornado uma mensagem caso ninguém pediu truco
   def invalid_response(round, response)
     valid_responses = %w[y n r]
     return { message: 'A resposta tem que ser y, n ou r!' } unless valid_responses.include? response
@@ -451,19 +439,6 @@ class GamesController < ApplicationController
     table[multiplier]
   end
 
-  # Função: invalid_give_up
-  # Descrição:
-  # Essa função recebe o player e faz uma
-  # verificação se ele está incluso dentro do
-  # intervalo
-  # Parâmetros:
-  # player: int
-  # Assetivas de entrada:
-  # É passado player para int para garantir e verificado 
-  # se ele está dentro do intervalo
-  # Assertiva de saída:
-  # É retornado uma mensagem de erro
-  # caso não esteja dentro do intervalo
   def invalid_give_up(player)
     return { message: 'O jogador tem que estar entre 0 e 3!' } unless (0..3).include? player.to_i
 
