@@ -56,7 +56,16 @@ class GamesController < ApplicationController
   # função atualiza os usuários com o estado deles em
   # relação ao jogo que foi jogado.
   # Parâmetros:
-  # hand_id
+  # hand_id: integer
+  # card: string
+  # Assertivas de entrada:
+  # hand_id -> tem que ser referente a uma mão existente
+  # (é a mão da qual a carta será jogada)
+  # card -> tem que estar na lista ['a', 'b', 'c']
+  # Assertivas de saída:
+  # Retorna o estado do jogo a não ser que de algum erro
+  # Se receber algum erro, retorna uma mensagem de erro
+  # e o código HTTP correspondente
   def play
     hand = Hand.find(params[:hand_id])
     round = hand.round
@@ -198,6 +207,18 @@ class GamesController < ApplicationController
   end
 
   # H6
+  # Função: select_card_from_hand
+  # Descrição:
+  # Essa função recebe o objeto mão e a letra da carta,
+  # retira essa carta da mão e retorna a carta
+  # Parâmetros:
+  # card_letter: string
+  # hand: objeto Hand
+  # Assertivas de entrada:
+  # card_letter -> tem que estar na lista ['a', 'b', 'c']
+  # hand -> tem que ser um objeto Hand válido.
+  # Assertivas de saída:
+  # Retorna uma carta no formato '♦ 2'
   def select_card_from_hand(card_letter, hand)
     case card_letter
     when 'a'
