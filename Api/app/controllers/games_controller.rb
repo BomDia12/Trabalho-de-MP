@@ -42,6 +42,30 @@ class GamesController < ApplicationController
   end
 
   # H6
+  # Função: play
+  # Descrição:
+  # Essa função recebe a carta a ser jogada e faz
+  # todos os procedimentos referentes a isso. Se com
+  # essa jogada a mesa termina, uma nova mesa é criada
+  # e os jogadores recebem os pontos referentes a mesa,
+  # se, com o fim da mesa, a rodada também termina, a função
+  # tambem toma todas as providência referentes a isso,
+  # cria um novo round, muda a pontuação dos jogadores
+  # no jogo dependendo do truco, distribui novas cartas etc.
+  # Se, com o fim da rodada, o jogo tambem termine, a
+  # função atualiza os usuários com o estado deles em
+  # relação ao jogo que foi jogado.
+  # Parâmetros:
+  # hand_id: integer
+  # card: string
+  # Assertivas de entrada:
+  # hand_id -> tem que ser referente a uma mão existente
+  # (é a mão da qual a carta será jogada)
+  # card -> tem que estar na lista ['a', 'b', 'c']
+  # Assertivas de saída:
+  # Retorna o estado do jogo a não ser que de algum erro
+  # Se receber algum erro, retorna uma mensagem de erro
+  # e o código HTTP correspondente
   def play
     hand = Hand.find(params[:hand_id])
     round = hand.round
@@ -156,6 +180,17 @@ class GamesController < ApplicationController
   end
 
   # H5
+  # Função: construct_deck
+  # Descrição:
+  # Essa função constrói um baralho de cartas
+  # e retorna o baralho.
+  # Parâmetros:
+  # Não há parâmetros.
+  # Assertivas de entrada:
+  # Não há entrada na função.
+  # Assertivas de saída:
+  # Retorna um deck com todas as cartas necessárias
+  # para se jogar truco.
   def construct_deck
     suits = %w[♠ ♥ ♣ ♦]
     normal_cards = %w[Q J K A 2 3]
@@ -183,6 +218,18 @@ class GamesController < ApplicationController
   end
 
   # H6
+  # Função: select_card_from_hand
+  # Descrição:
+  # Essa função recebe o objeto mão e a letra da carta,
+  # retira essa carta da mão e retorna a carta
+  # Parâmetros:
+  # card_letter: string
+  # hand: objeto Hand
+  # Assertivas de entrada:
+  # card_letter -> tem que estar na lista ['a', 'b', 'c']
+  # hand -> tem que ser um objeto Hand válido.
+  # Assertivas de saída:
+  # Retorna uma carta no formato '♦ 2'
   def select_card_from_hand(card_letter, hand)
     case card_letter
     when 'a'
@@ -201,6 +248,23 @@ class GamesController < ApplicationController
   end
 
   # H6
+  # Função: insert card into table
+  # Descrição:
+  # Essa função recebe uma carta, uma mesa e o turno
+  # e coloca a carta no objeto mesa dependendo do turno
+  # Parâmetros:
+  # card: string
+  # turn: integer
+  # table: objeto Table
+  # Assertivas de entrada:
+  # card -> tem que ser formatada como uma carta,
+  # com o naipe (simbolo do naipe em unicode) separado por
+  # um espaço do número (ou letra) da carta
+  # turn -> tem que estar no intervalo 0..3
+  # table -> tem que ser um objeto Table válido
+  # Assertivas de saída:
+  # Essa função não retorna nada, apenas modifica o objeto
+  # table
   def insert_card_into_table(card, turn, table)
     case turn
     when 0
@@ -234,6 +298,19 @@ class GamesController < ApplicationController
     end
   end
 
+  # Função: check_round_winner
+  # Descrição:
+  # Essa função recebe um numero de identificação referente 
+  # ao vencedor da rodada e retorna mais 1 ponto ao vencedor.
+  # Parâmetros:
+  # winner: integer
+  # round: objeto Round
+  # Assetivas de entrada:
+  # winner tem que ser o número do jogador com a carta mais forte,
+  # round se refere à rodada atual, em que os 4 jogadores escolhem a carta.
+  # Assertiva de saída:
+  # Esta função não retorna nada, apenas adiciona 1 na 
+  # pontuação de round do time ganhador.
   def check_round_winner(winner, round)
     case winner
     when 1
@@ -246,6 +323,21 @@ class GamesController < ApplicationController
     end
   end
 
+  # Função: check_stronger_card
+  # Descrição:
+  # Essa função recebe duas cartas e retorna a mais forte
+  # entre as duas para o truco
+  # Parâmetros:
+  # card_1: string
+  # card_2: string
+  # Assetivas de entrada:
+  # card_1 e card_2 tem que ser formatada como uma carta,
+  # com o naipe (simbolo do naipe em unicode) separado por
+  # um espaço do número (ou letra) da carta
+  # Assertiva de saída:
+  # 1 -> card_1 > card_2
+  # 2 -> card_1 < card_2
+  # 3 -> card_1 == card_2
   def check_stronger_card(card_1, card_2)
     manilhas = ['♣ 4', '♥ 7', '♠ A', '♦ 7']
     manilhas.each do |manilha|
@@ -262,6 +354,21 @@ class GamesController < ApplicationController
     end
   end
 
+  # Função: finish_round
+  # Descrição:
+  # Essa função verifica se o round do jogo chegou ao
+  # fim. Caso a pontuação da dupla A tenha chegado
+  # a 2 pontos, a pontuação do jogo da dupla A é adicionada.
+  # Caso contrário, a pontuação é adicionada à dupla B e o
+  # round é terminado e outro round é começado. Ainda é chamada
+  # a função de checar se o jogo foi terminado.
+  # Parâmetros:
+  # round: objeto Round
+  # Assertivas de entrada:
+  # A entrada deve ser um objeto Round válido.
+  # Assertivas de saída:
+  # A função não retorna nada, apenas termina o round e começa
+  # outro.
   def finish_round(round)
     game = round.game
     if round.points_a == 2

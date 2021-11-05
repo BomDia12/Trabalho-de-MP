@@ -8,7 +8,8 @@ import {
   Table,
   TopPlayer,
   YourRound,
-  EnemyRound
+  EnemyRound,
+  OpenCard
 } from "./styles";
 import CardBack from "../../components/GameCardBack";
 import { useParams } from "react-router";
@@ -54,6 +55,12 @@ const Game = () => {
     const response = await api.post("games/play", {hand_id: hand.id, card: 'c'})
     console.log(response.status)
   }
+
+  const isBlack = (card) => {
+    let symbol = card[0]
+    let black = ['♠', '♣']
+    return black.includes(symbol)
+  }
   
   useEffect(() => {
     getRound();
@@ -65,19 +72,19 @@ const Game = () => {
       <Table>
           {table &&
                 table.card_a &&
-                    <div>{table.card_a}</div>
+                    <OpenCard  black={isBlack(table.card_a)}>{table.card_a}</OpenCard>
           }
           {table &&
                 table.card_b &&
-                    <div>{table.card_b}</div>
+                    <OpenCard  black={isBlack(table.card_b)}>{table.card_b}</OpenCard>
           }
           {table &&
                 table.card_c &&
-                    <div>{table.card_c}</div>
+                    <OpenCard  black={isBlack(table.card_c)}>{table.card_c}</OpenCard>
           }
           {table &&
                 table.card_d &&
-                    <div>{table.card_d}</div>
+                    <OpenCard  black={isBlack(table.card_d)}>{table.card_d}</OpenCard>
           }
       </Table>
     
@@ -122,9 +129,9 @@ const Game = () => {
       </RightPlayer>
 
       <BottomPlayer>
-        {hand && <a onClick={playCardA}>{hand.card_a}</a>}
-        {hand && <a onClick={playCardB}>{hand.card_b}</a>}
-        {hand && <a onClick={playCardC}>{hand.card_c}</a>}
+        {hand && hand.card_a && <OpenCard onClick={playCardA} black={isBlack(hand.card_a)}> {hand.card_a} </OpenCard>}
+        {hand && hand.card_b && <OpenCard onClick={playCardB} black={isBlack(hand.card_b)}> {hand.card_b} </OpenCard>}
+        {hand && hand.card_c && <OpenCard onClick={playCardC} black={isBlack(hand.card_c)}> {hand.card_c} </OpenCard>}
       </BottomPlayer>
 
       <LeftPlayer>

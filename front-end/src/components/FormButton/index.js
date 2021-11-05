@@ -1,10 +1,10 @@
 import React from 'react'
 import {Container} from './styles'
 
-const Button = ({label, id}) => {
+const Button = ({label, id, type}) => {
     return (
         <Container 
-             type="button" id={id} value={label}
+             type={type} id={id} value={label}
         />
     )
 }

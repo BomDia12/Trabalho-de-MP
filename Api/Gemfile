@@ -50,3 +50,4 @@ gem 'simple_token_authentication'
 
 # Tool to help with the JSONs
 gem 'active_model_serializers'
+gem 'rack-cors'

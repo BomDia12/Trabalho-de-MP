@@ -8,4 +8,5 @@ export const Card = styled.div`
   border: 5px solid #ffffff;
   box-sizing: border-box;
   border-radius: 5%;
+  margin: .25rem;
 `;

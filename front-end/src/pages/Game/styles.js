@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Container = styled.div`
   background: var(--international-orange);
@@ -80,6 +80,7 @@ export const YourPoints = styled(PointShow)`
     top: 5vh;
 `;
 
+
 export const EnemyPoints = styled(PointShow)`
     right: 5vw;
     top: 5vh;
@@ -93,4 +94,23 @@ export const YourRound = styled(PointShow)`
 export const EnemyRound = styled(PointShow)`
     right: 5vw;
     bottom: 5vh;
+`;
+
+export const OpenCard = styled.div`
+    background-color: #fff;
+    color: ${(props) => !props.black ? '#DA1616' : '#1F1F1F'};
+    width: 5.5rem;
+    max-width: 5.5rem;
+    height: 8rem;
+    margin: .25rem;
+    border-radius: 5%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    text-align: center;
+    font-size: 3.3rem;
+    font-family: 'Zen Antique Soft', serif;
+    &:hover {
+        cursor: pointer
+    }
 `;
